@@ -6,32 +6,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;900&display=swap');
 
 :root {
-    --main-bg-color: #333;
+    --main-bg-color: #1d3557;
+    --main-font-color: #f1faee;
+    --main-red-color: #e63946;
 }
 
 
 /* font-family: 'Montserrat Alternates', sans-serif; */
 
 
-ul li {
-    list-style-type: none;
-}
-
 h1,
 h2 {
     font-family: 'Montserrat Alternates', sans-serif;
     font-weight: 900;
+    color: var(--main-font-color);
 }
 
 p {
     font-family: 'Montserrat Alternates', sans-serif;
     font-weight: 400;
+    color: var(--main-font-color);
 }
 
-span {
-    font-weight: bold;
-    color: cornflowerblue;
-}
 
 
 .card {
@@ -41,7 +37,7 @@ span {
     transition: 0.4s;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
     background: var(--main-bg-color) !important;
-    color: #dddddd !important;
+    color: var(--main-font-color) !important;
 }
 
 .card:hover {
@@ -50,6 +46,5 @@ span {
 
 body {
     background: var(--main-bg-color) !important;
-
     overflow-x: hidden;
 }
