@@ -48,3 +48,7 @@ body {
     background: var(--main-bg-color) !important;
     overflow-x: hidden;
 }
+
+.logo {
+    width: 80px;
+}
