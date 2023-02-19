@@ -6,7 +6,7 @@ class Database
     private $user = DB_USER;
     private $password = DB_PASS;
     private $dbname = DB_NAME;
-    private $connexion;
+    protected $connexion;
 
 
     // Je crée un constructeur pour le dsn et la connexion a la db

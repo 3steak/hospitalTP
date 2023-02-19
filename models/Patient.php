@@ -1,6 +1,5 @@
 <?php
-
-class Patient
+class Patient extends Database
 {
     private $lastname;
     private $firstname;
@@ -14,18 +13,9 @@ class Patient
      *
      * @return void
      */
-    public function __construct(
-        string $lastname,
-        string $firstname,
-        string $birthdate,
-        string $phone,
-        string $mail
-    ) {
-        $this->lastname = $lastname;
-        $this->firstname = $firstname;
-        $this->birthdate = $birthdate;
-        $this->phone = $phone;
-        $this->mail = $mail;
+    public function __construct()
+    {
+        parent::__construct();
     }
 
 
@@ -127,13 +117,43 @@ class Patient
     /**
      * getId
      *
-     * @return string
+     * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         $this->id;
     }
 
+
+
+    /**
+     * setId
+     *
+     * @param  mixed $id
+     * @return void
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    public function addPatient()
+    {
+
+        $request = 'INSERT INTO `patients` (firstname, lastname, birthdate, phone, mail) VALUES
+        (:lastname,:firstname,:birthdate,:phone,:mail)';
+
+        $results = $this->connexion->$this->executeRequest($request);
+        $results->bindValue(':lastname', $this->getLastname(), PDO::PARAM_STR);
+        $results->bindValue(':firstname', $this->getFirstname(), PDO::PARAM_STR);
+        $results->bindValue(':birthdate', $this->getBirthdate(), PDO::PARAM_STR);
+        $results->bindValue(':phone', $this->getPhone(), PDO::PARAM_STR);
+        $results->bindValue(':mail', $this->getMail(), PDO::PARAM_STR);
+
+        // renvoyer sur list si execute 
+    }
 
     // FIN création character
 }

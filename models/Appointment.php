@@ -1,14 +1,15 @@
 <?php
 
-class Appointment extends Patient
+class Appointment extends Database
 {
     private $id;
     private $dateHour;
     private $idPatients;
 
 
-    public function __construct(string $dateHour)
+    public function __construct()
     {
+        parent::__construct();
     }
 
 
