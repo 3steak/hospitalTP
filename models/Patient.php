@@ -1,12 +1,12 @@
 <?php
 class Patient extends Database
 {
-    private $lastname;
-    private $firstname;
-    private $birthdate;
-    private $phone;
-    private $mail;
-    private $id;
+    private string $lastname;
+    private string $firstname;
+    private string $birthdate;
+    private string $phone;
+    private string $mail;
+    private int $id;
 
     /** Mehode magique permettant de créer mon patient
      * __construct
@@ -30,9 +30,9 @@ class Patient extends Database
     {
         $this->lastname = $lastname;
     }
-    public function getLastname(): string
+    public function getLastname()
     {
-        $this->lastname;
+        return $this->lastname;
     }
 
     /**
@@ -45,9 +45,9 @@ class Patient extends Database
     {
         $this->firstname = $firstname;
     }
-    public function getFirstname(): string
+    public function getFirstname()
     {
-        $this->firstname;
+        return $this->firstname;
     }
 
     /**
@@ -66,9 +66,9 @@ class Patient extends Database
      *
      * @return string
      */
-    public function getBirthdate(): string
+    public function getBirthdate()
     {
-        $this->birthdate;
+        return $this->birthdate;
     }
 
     /**
@@ -87,9 +87,9 @@ class Patient extends Database
      *
      * @return string
      */
-    public function getPhone(): string
+    public function getPhone()
     {
-        $this->phone;
+        return $this->phone;
     }
 
     /**
@@ -108,9 +108,9 @@ class Patient extends Database
      *
      * @return string
      */
-    public function getMail(): string
+    public function getMail()
     {
-        $this->mail;
+        return   $this->mail;
     }
 
 
@@ -121,7 +121,7 @@ class Patient extends Database
      */
     public function getId()
     {
-        $this->id;
+        return  $this->id;
     }
 
 
@@ -145,15 +145,36 @@ class Patient extends Database
         $request = 'INSERT INTO `patients` (firstname, lastname, birthdate, phone, mail) VALUES
         (:lastname,:firstname,:birthdate,:phone,:mail)';
 
-        $results = $this->connexion->$this->executeRequest($request);
+        $results = $this->connexion->prepare($request);
+
         $results->bindValue(':lastname', $this->getLastname(), PDO::PARAM_STR);
         $results->bindValue(':firstname', $this->getFirstname(), PDO::PARAM_STR);
         $results->bindValue(':birthdate', $this->getBirthdate(), PDO::PARAM_STR);
         $results->bindValue(':phone', $this->getPhone(), PDO::PARAM_STR);
         $results->bindValue(':mail', $this->getMail(), PDO::PARAM_STR);
 
-        // renvoyer sur list si execute 
+        if ($results) {
+            $results->execute();
+            // renvoyer sur list si execute 
+            header('location: /controllers/listPatientCtrl.php?register=ok');
+            die;
+        } else {
+            echo 'erreur bindValue !';
+        }
     }
 
-    // FIN création character
+
+    /**
+     * listPatient
+     *
+     * @return array
+     */
+    public function listPatient()
+    {
+        $request = 'SELECT * FROM patients;';
+        $listPatients = $this->queryRequest($request);
+        return $listPatients;
+    }
+
+    // FIN création class patient
 }
