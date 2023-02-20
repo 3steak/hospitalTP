@@ -40,7 +40,7 @@
                     </div>
                     <small><?= $error['mail'] ?? '' ?></small>
 
-                    <button type="submit" class="mt-5 btn">AJOUTER</button>
+                    <button type="submit" class="mt-5 bouttonAdd">AJOUTER</button>
                 </form>
             </div>
         </div>

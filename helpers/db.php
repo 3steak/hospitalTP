@@ -66,6 +66,7 @@ class Database
 
             // si erreur ! renvoyer vers 404 ou  message erreur
         } catch (\Throwable $th) {
+            $errorMsg = $th->getMessage();
             include_once(__DIR__ . '/../views/templates/header.php');
             include(__DIR__ . '/../views/errors.php');
             include_once(__DIR__ . '/../views/templates/footer.php');

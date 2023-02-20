@@ -37,7 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
     //============================= EMAIL ================
-    $mail = trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL));
+    $mail = trim(filter_input(INPUT_POST, 'mail', FILTER_SANITIZE_EMAIL));
+
     if (empty($mail)) {
         $error["email"] = '<small class="text-black">L\'email n\'est pas renseigné</small>';
     } elseif (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
@@ -84,7 +85,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $patient->setMail($mail);
 
         $patient->addPatient();
+    } else {
+        var_dump('toto');
+        include_once(__DIR__ . '/../views/templates/header.php');
+        include(__DIR__ . '/../views/patients/addPatient.php');
     }
+
+    // si EMPTY $POST
 } else {
     include_once(__DIR__ . '/../views/templates/header.php');
     include(__DIR__ . '/../views/patients/addPatient.php');

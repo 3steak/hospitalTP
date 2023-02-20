@@ -2,28 +2,9 @@
 <script src="https://kit.fontawesome.com/f422d87d3c.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
-<script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.js" charset="utf8" type="text/javascript"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+<script src="/public/assets/js/script.js"></script>
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#customersTable').dataTable({
-            "processing": true,
-            "ajax": {
-                "url": "listPatientCtrl.php",
-            },
-            "columns": [{
-                    data: 'id'
-                },
-                {
-                    data: 'lastname'
-                },
-                {
-                    data: 'email'
-                }
-            ]
-        });
-    });
-</script>
 </body>
 <div class="container">
     <div class="row">

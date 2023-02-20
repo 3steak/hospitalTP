@@ -1,1 +1,1 @@
-<p><?= $errorMsg ?></p>
+<p class="text-white"><?= $errorMsg ?></p>

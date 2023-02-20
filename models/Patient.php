@@ -132,7 +132,7 @@ class Patient extends Database
      * @param  mixed $id
      * @return void
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
 
@@ -176,5 +176,13 @@ class Patient extends Database
         return $listPatients;
     }
 
+
+    public function getPatient()
+    {
+        $request = 'SELECT * FROM patients WHERE id =' . $this->getId() . ' ;';
+        $profilPatient = $this->queryRequest($request);
+        $profilPatient = $profilPatient[0];
+        return $profilPatient;
+    }
     // FIN création class patient
 }
