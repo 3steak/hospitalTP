@@ -13,7 +13,7 @@
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg ">
     <div class="container-fluid navup">
-        <a class="navbar-brand" href="/controllers/homeCtrl.php"><img src="/public/assets/img/logo.png" alt="logo hopital" class="logo"></a>
+        <a class="navbar-brand" href="/controllers/homeCtrl.php"><img src="/public/assets/img/pillule.png" alt="logo hopital" class="logo"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

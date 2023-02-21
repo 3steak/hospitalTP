@@ -13,7 +13,7 @@
 <!-- NAVBAR -->
 <nav class="navbar ">
     <div class="container-fluid  ">
-        <a class="navbar-brand mx-auto" href="/controllers/homeCtrl.php"><img src="/public/assets/img/logo.png" alt="logo hopital" class="logo"></a>
+        <a class="navbar-brand mx-auto" href="/controllers/homeCtrl.php"><img src="/public/assets/img/pillule.png" alt="logo hopital" class="logo"></a>
     </div>
 </nav>
 

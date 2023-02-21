@@ -8,7 +8,7 @@
 :root {
     --main-bg-color: #1d3557;
     --main-font-color: #f1faee;
-    --main-red-color: #e63946;
+    --main-red-color: #FF0000;
 
     --color-red: #AE1100;
     --color-bg: #EBECF0;
@@ -47,7 +47,7 @@ a {
 }
 
 .card:hover {
-    transform: scale(1.2, 1.2);
+    transform: scale(1.05, 1.05);
 }
 
 body {
@@ -56,7 +56,7 @@ body {
 }
 
 .logo {
-    width: 70px;
+    width: 90px;
 }
 
 .nav-link {
