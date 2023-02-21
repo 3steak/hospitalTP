@@ -30,14 +30,15 @@ h2 {
 p {
     font-family: 'Montserrat Alternates', sans-serif;
     font-weight: 400;
-    color: var(--main-font-color);
+    color: var(--main-font-color) !important;
 }
 
 
+a {
+    text-decoration: none !important;
+}
 
 .card {
-    margin: 1.8rem;
-    width: 20rem;
     cursor: pointer;
     transition: 0.4s;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
@@ -56,6 +57,10 @@ body {
 
 .logo {
     width: 70px;
+}
+
+.nav-link {
+    color: var(--main-font-color) !important;
 }
 
 .barreco {
@@ -87,6 +92,10 @@ body {
 h3,
 p {
     color: #1d3557;
+}
+
+.modifExplain {
+    color: var(--main-bg-color) !important;
 }
 
 .content .field {

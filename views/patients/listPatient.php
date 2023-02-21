@@ -17,12 +17,12 @@
                     <?php foreach ($listPatients as $listPatient) { ?>
 
                         <tr>
-                            <td><?= $listPatient->lastname ?></td>
-                            <td><?= $listPatient->firstname ?></td>
-                            <td class="dNoneMobil"><?= $listPatient->birthdate ?></td>
-                            <td class="dNoneMobil"><?= $listPatient->phone ?></td>
-                            <td class="dNoneMobil"><?= $listPatient->mail ?></td>
-                            <td><a class="m-1" href="/controllers/profilPatientCtrl.php?id=<?= $listPatient->id ?>"><i class="fa-regular fa-eye"></i></a> <i class="fa-regular fa-pen-to-square m-1"></i><i class="fa-regular fa-trash-can m-1"></i></td>
+                            <td><?= htmlspecialchars($listPatient->lastname) ?></td>
+                            <td><?= htmlspecialchars($listPatient->firstname) ?></td>
+                            <td class="dNoneMobil"><?= htmlspecialchars(date('d/m/Y', strtotime($listPatient->birthdate))) ?></td>
+                            <td class="dNoneMobil"><?= htmlspecialchars($listPatient->phone)  ?></td>
+                            <td class="dNoneMobil"><?= htmlspecialchars($listPatient->mail) ?></td>
+                            <td><a class="m-1" title="Accéder au profil du patient" href="/controllers/profilPatientCtrl.php?id=<?= $listPatient->id ?>"><i class="fa-regular fa-eye"></i></a> <i class="fa-regular fa-trash-can m-1"></i></td>
                         </tr> <?php } ?>
                 </tbody>
 

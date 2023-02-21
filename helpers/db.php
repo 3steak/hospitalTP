@@ -2,23 +2,27 @@
 require_once(__DIR__ . '/../config/constant.php');
 class Database
 {
-    private $host = DB_HOST;
-    private $user = DB_USER;
-    private $password = DB_PASS;
-    private $dbname = DB_NAME;
-    protected $connexion;
+    private static $host = DB_HOST;
+    private static $user = DB_USER;
+    private static $password = DB_PASS;
+    private static $dbname = DB_NAME;
+    protected static $connexion;
 
 
     // Je crée un constructeur pour le dsn et la connexion a la db
     // A la création de ma class le construct se fera
     public function __construct()
     {
-        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
-        $this->connexion = new PDO($dsn, $this->user, $this->password);
-        $this->connexion->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+        $this->connect();
     }
 
-
+    public static function connect()
+    {
+        $dsn = 'mysql:host=' . self::$host . ';dbname=' . self::$dbname;
+        self::$connexion = new PDO($dsn, self::$user, self::$password);
+        self::$connexion->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+        return self::$connexion;
+    }
 
     /** je crée une fonction pour preparer et executer ma requette sql 
      * executeRequest
@@ -31,7 +35,7 @@ class Database
         // j'essaie
         //  a mettre dans le ctrl 
         try {
-            $stm = $this->connexion->prepare($request);
+            $stm = self::$connexion->prepare($request);
             $stm->execute();
             // je retourne directement le fetch du statement
             //  qui sera stocké dans une variable
@@ -59,7 +63,7 @@ class Database
     {
         // j'essaie
         try {
-            $stm = $this->connexion->query($request);
+            $stm = self::$connexion->query($request);
             // je retourne directement le fetch du statement
             //  qui sera stocké dans une variable
             return $stm->fetchAll();

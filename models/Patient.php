@@ -1,4 +1,5 @@
 <?php
+require_once(__DIR__ . '/../helpers/dd.php');
 class Patient extends Database
 {
     private string $lastname;
@@ -135,31 +136,38 @@ class Patient extends Database
     public function setId(int $id)
     {
         $this->id = $id;
-
         return $this;
     }
 
     public function addPatient()
     {
 
-        $request = 'INSERT INTO `patients` (firstname, lastname, birthdate, phone, mail) VALUES
+        $request = 'INSERT INTO `patients` (`firstname`, `lastname`, `birthdate`, `phone`, `mail`) VALUES
         (:lastname,:firstname,:birthdate,:phone,:mail)';
 
-        $results = $this->connexion->prepare($request);
+        try {
+            $sth = Database::connect()->prepare($request);
 
-        $results->bindValue(':lastname', $this->getLastname(), PDO::PARAM_STR);
-        $results->bindValue(':firstname', $this->getFirstname(), PDO::PARAM_STR);
-        $results->bindValue(':birthdate', $this->getBirthdate(), PDO::PARAM_STR);
-        $results->bindValue(':phone', $this->getPhone(), PDO::PARAM_STR);
-        $results->bindValue(':mail', $this->getMail(), PDO::PARAM_STR);
-
-        if ($results) {
-            $results->execute();
-            // renvoyer sur list si execute 
-            header('location: /controllers/listPatientCtrl.php?register=ok');
+            $sth->bindValue(':lastname', $this->getLastname(), PDO::PARAM_STR);
+            $sth->bindValue(':firstname', $this->getFirstname(), PDO::PARAM_STR);
+            $sth->bindValue(':birthdate', $this->getBirthdate(), PDO::PARAM_STR);
+            $sth->bindValue(':phone', $this->getPhone(), PDO::PARAM_STR);
+            $sth->bindValue(':mail', $this->getMail(), PDO::PARAM_STR);
+            if ($sth) {
+                $sth->execute();
+                // renvoyer sur list si execute 
+                header('location: /controllers/listPatientCtrl.php?register=ok');
+                die;
+            } else {
+                echo 'erreur bindValue !';
+            }
+            // si erreur ! renvoyer vers 404 ou  message erreur
+        } catch (\Throwable $th) {
+            $errorMsg = $th->getMessage();
+            include_once(__DIR__ . '/../views/templates/header.php');
+            include(__DIR__ . '/../views/errors.php');
+            include_once(__DIR__ . '/../views/templates/footer.php');
             die;
-        } else {
-            echo 'erreur bindValue !';
         }
     }
 
@@ -179,10 +187,58 @@ class Patient extends Database
 
     public function getPatient()
     {
-        $request = 'SELECT * FROM patients WHERE id =' . $this->getId() . ' ;';
+        $request = 'SELECT * FROM `patients` WHERE `id` =' . $this->getId() . ' ;';
         $profilPatient = $this->queryRequest($request);
         $profilPatient = $profilPatient[0];
         return $profilPatient;
     }
+
+    public static function isMailExist(string $mail)
+    {
+        $request = 'SELECT * FROM `patients` WHERE `mail` = ? ;';
+        try {
+            $sth = Database::connect()->prepare($request);
+            $sth->execute([$mail]);
+            $result = $sth->fetchAll();
+            return !empty($result) ?? false;
+        } catch (\Throwable $th) {
+            $errorMsg = $th->getMessage();
+            include_once(__DIR__ . '/../views/templates/header.php');
+            include(__DIR__ . '/../views/errors.php');
+            include_once(__DIR__ . '/../views/templates/footer.php');
+            die;
+        }
+    }
+
+
+    public function updatePatient()
+    {
+
+        $request = 'UPDATE `patients` 
+                    SET `firstname`=:firstname, `lastname`=:lastname, `birthdate`=:birthdate, `phone`= :phone, `mail`= :mail
+                    WHERE id =' . $this->getId() . ';';
+        try {
+            $sth = Database::connect()->prepare($request);
+
+            $sth->bindValue(':lastname', $this->getLastname(), PDO::PARAM_STR);
+            $sth->bindValue(':firstname', $this->getFirstname(), PDO::PARAM_STR);
+            $sth->bindValue(':birthdate', $this->getBirthdate(), PDO::PARAM_STR);
+            $sth->bindValue(':phone', $this->getPhone(), PDO::PARAM_STR);
+            $sth->bindValue(':mail', $this->getMail(), PDO::PARAM_STR);
+            $sth->execute();
+            // renvoyer sur list si execute 
+            header('location: /controllers/listPatientCtrl.php');
+            die;
+
+            // si erreur ! renvoyer vers 404 ou  message erreur
+        } catch (\Throwable $th) {
+            $errorMsg = $th->getMessage();
+            include_once(__DIR__ . '/../views/templates/header.php');
+            include(__DIR__ . '/../views/errors.php');
+            include_once(__DIR__ . '/../views/templates/footer.php');
+            die;
+        }
+    }
+
     // FIN création class patient
 }

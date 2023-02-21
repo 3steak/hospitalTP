@@ -73,6 +73,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $error['phone'] = 'Numéro de téléphone non valide';
         }
     }
+    if (Patient::isMailExist($mail)) {
+        $error["email"] = '<small class= "text-black">L\'email existe déjà en Base de données</small>';
+    }
     if (empty($error)) {
 
         // DEFINIR LES ATTRIBUTS 
@@ -83,10 +86,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $patient->setBirthdate($birthdate);
         $patient->setPhone($phone);
         $patient->setMail($mail);
-
         $patient->addPatient();
     } else {
-        var_dump('toto');
         include_once(__DIR__ . '/../views/templates/header.php');
         include(__DIR__ . '/../views/patients/addPatient.php');
     }
