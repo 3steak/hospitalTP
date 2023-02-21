@@ -16,26 +16,35 @@
                             <h4 class=" text-start ">Nom</h4>
                             <input type="text" id="disabledTextInput" name="lastname" class="form-control" value="<?= htmlspecialchars($profilPatient->lastname) ?>">
                         </div>
+                        <small><?= $error['lastname'] ?? '' ?></small>
+
                         <div class="">
                             <label for="disabledTextInput" class="form-label">Disabled input</label>
                             <h4 class=" text-start ">Prénom</h4>
                             <input type="text" id="disabledTextInput" name="firstname" class="form-control" value="<?= htmlspecialchars($profilPatient->firstname) ?>">
                         </div>
+                        <small><?= $error['firstname'] ?? '' ?></small>
+
                         <div class="">
                             <label for="disabledTextInput" class="form-label">Disabled input</label>
                             <h4 class=" text-start">Date de naissance</h4>
                             <input type="date" id="disabledTextInput" name="birthdate" class="form-control" value="<?= htmlspecialchars($profilPatient->birthdate) ?>">
                         </div>
+                        <small><?= $error['date'] ?? '' ?></small>
+
                         <div class="">
                             <label for="disabledTextInput" class="form-label">Disabled input</label>
                             <h4 class=" text-start ">Téléphone</h4>
                             <input type="text" id="disabledTextInput" name="phone" class="form-control" value="<?= htmlspecialchars($profilPatient->phone) ?>">
                         </div>
+                        <small><?= $error['phone'] ?? '' ?></small>
+
                         <div class="">
                             <label for="disabledTextInput" class="form-label">Disabled input</label>
                             <h4 class=" text-start ">Email</h4>
                             <input type="text" id="disabledTextInput" name="mail" class="form-control" value="<?= htmlspecialchars($profilPatient->mail) ?>">
                         </div>
+                        <small><?= $error['mail'] ?? '' ?></small>
 
                         <button type="submit" class="btn btn-primary btnUpdate">Modifier</button>
                     </fieldset>

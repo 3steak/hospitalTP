@@ -139,6 +139,13 @@ class Patient extends Database
         return $this;
     }
 
+
+
+    /**
+     * addPatient
+     *
+     * @return void
+     */
     public function addPatient()
     {
 
@@ -185,6 +192,11 @@ class Patient extends Database
     }
 
 
+    /**
+     * getPatient
+     *
+     * @return array
+     */
     public function getPatient()
     {
         $request = 'SELECT * FROM `patients` WHERE `id` =' . $this->getId() . ' ;';
@@ -193,6 +205,12 @@ class Patient extends Database
         return $profilPatient;
     }
 
+    /**
+     * isMailExist
+     *
+     * @param  mixed $mail
+     * @return bool
+     */
     public static function isMailExist(string $mail)
     {
         $request = 'SELECT * FROM `patients` WHERE `mail` = ? ;';
@@ -211,8 +229,16 @@ class Patient extends Database
     }
 
 
+    /**
+     * updatePatient
+     *
+     * @return bool
+     */
     public function updatePatient()
     {
+        // $request = 'UPDATE `patients` 
+        // SET `firstname`=:firstname, `lastname`=:lastname, `birthdate`=:birthdate, `phone`= :phone, `mail`= :mail
+        // WHERE id =' . $this->getId() . ' AND `mail` <> (SELECT * FROM (SELECT `mail` FROM `patients` WHERE id=' . $this->getId() . ') as patient_mail);';
 
         $request = 'UPDATE `patients` 
                     SET `firstname`=:firstname, `lastname`=:lastname, `birthdate`=:birthdate, `phone`= :phone, `mail`= :mail
@@ -227,7 +253,7 @@ class Patient extends Database
             $sth->bindValue(':mail', $this->getMail(), PDO::PARAM_STR);
             $sth->execute();
             // renvoyer sur list si execute 
-            header('location: /controllers/listPatientCtrl.php');
+            header('location: /controllers/listPatientCtrl.php?register=update');
             die;
 
             // si erreur ! renvoyer vers 404 ou  message erreur

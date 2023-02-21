@@ -1,8 +1,11 @@
 <?php
-
+session_start();
 require_once(__DIR__ . '/../helpers/db.php');
 require_once(__DIR__ . '/../models/Patient.php');
 require_once(__DIR__ . '/../config/constant.php');
+require_once(__DIR__ . '/../helpers/flash.php');
+flash('update', 'Patient modifié avec succès ! ', FLASH_SUCCESS);
+
 
 // Recup le patient id = id
 if (!empty($_GET['id'])) {
