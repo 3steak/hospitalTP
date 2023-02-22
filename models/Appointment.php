@@ -40,10 +40,9 @@ class Appointment extends Patient
      *
      * @return  self
      */
-    public function setIdPatient($idPatients)
+    public function setIdPatient($idPatient)
     {
-        $this->idPatient = $idPatients;
-
+        $this->idPatient = $idPatient;
         return $this;
     }
 
@@ -52,7 +51,7 @@ class Appointment extends Patient
      *
      * @return int
      */
-    public function getIdPatients()
+    public function getIdPatient()
     {
         return  $this->idPatient;
     }
@@ -76,5 +75,31 @@ class Appointment extends Patient
 
         return $this;
     }
+    public function addAppointment()
+    {
+        $request = "INSERT INTO `appointments` (`dateHour`, `idPatients`) VALUES
+    (:dateHour, :idPatients);";
+
+        $sth = Database::connect()->prepare($request);
+        $sth->bindValue(':dateHour', $this->getDatehour(), PDO::PARAM_STR);
+        $sth->bindValue(':idPatients', $this->getIdPatient(), PDO::PARAM_INT);
+        if ($sth) {
+            $sth->execute();
+            // renvoyer sur list si execute 
+            header('location: /ListAppointments?register=rdvOk');
+            die;
+        } else {
+            echo 'erreur bindValue !';
+        }
+    }
+
+    public static function listAppointment(): array
+    {
+        $request = 'SELECT * FROM appointments JOIN patients ON appointments.idPatients = patients.id;';
+        $database = new Database();
+        $listAppointments = $database->queryRequest($request);
+        return $listAppointments;
+    }
+
     // Fin class 
 }

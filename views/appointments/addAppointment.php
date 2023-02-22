@@ -9,20 +9,24 @@
                     <!-- SELECT -->
                     <div class="field">
                         <select class="pe-2" name="idPatient">
-                            <option value="">--Choisissez un patient--</option>
+                            <option value="">Choisissez un patient</option>
                             <?php foreach ($listPatients as  $patient) { ?>
-                                <option value="<?= $patient->lastname ?>"><?= $patient->lastname ?></option>
+                                <option value="<?= $patient->id ?>"><?= $patient->lastname ?> - <?= $patient->firstname ?> - <?= $patient->mail ?></option>
                             <?php } ?>
                         </select>
                     </div>
-                    <small><?= $error['firstname'] ?? '' ?></small>
+                    <small><?= $error['idPatient'] ?? '' ?></small>
 
-                    <!-- DATEHOUR -->
+                    <!-- DATE -->
                     <div class=" field">
-                        <input class="pe-2" type="datetime-local" name="dateHour" value="<?= date('d-M-Y-H-i') ?>" required>
-
+                        <input class="pe-2" type="date" name="date" value="" required>
                     </div>
                     <small><?= $error['date'] ?? '' ?></small>
+                    <!-- HOUR -->
+                    <div class=" field">
+                        <input class="pe-2" type="time" name="hour" value="" required>
+                    </div>
+                    <small><?= $error['hour'] ?? '' ?></small>
 
                     <button type="submit" class="mt-5 bouttonAdd">ENREGISTRER</button>
                 </form>

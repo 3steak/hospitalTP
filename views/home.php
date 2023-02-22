@@ -21,5 +21,12 @@
                 </div>
             </a>
         </div>
+        <div class="col-12 col-lg-4 mb-5">
+            <a href="/ListAppointments">
+                <div class="card">
+                    <p class="text-center">Liste des rendez-vous</p>
+                </div>
+            </a>
+        </div>
     </div>
 </div>

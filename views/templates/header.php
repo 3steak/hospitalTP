@@ -31,6 +31,10 @@
                     <a class="nav-link" href="/AddAppointment">Prise de rendez-vous</a>
                 </li>
                 <div class="barreco d-lg-none"></div>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ListAppointments">Liste des rendez-vous</a>
+                </li>
+                <div class="barreco d-lg-none"></div>
             </ul>
         </div>
     </div>
