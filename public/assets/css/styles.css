@@ -84,7 +84,6 @@ body {
     border-radius: 10px;
     padding: 40px 30px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
-
 }
 
 .form h2,
@@ -104,7 +103,8 @@ p {
     position: relative;
 }
 
-.field input {
+.field input,
+.field select {
     height: 100%;
     width: 100%;
     padding-left: 45px;
@@ -204,6 +204,12 @@ label {
 #dataTable_previous,
 #dataTable_next {
     color: var(--main-font-color) !important;
+}
+
+.telmail,
+.seeProfil {
+    text-decoration: none !important;
+    color: var(--main-bg-color) !important;
 }
 
 @media only screen and (max-width: 780px) {

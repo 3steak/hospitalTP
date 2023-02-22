@@ -14,18 +14,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($listPatients as $listPatient) { ?>
+                    <?php foreach ($listPatients as $patient) { ?>
 
                         <tr>
-                            <td><?= htmlspecialchars($listPatient->lastname) ?></td>
-                            <td><?= htmlspecialchars($listPatient->firstname) ?></td>
-                            <td class="dNoneMobil"><?= htmlspecialchars(date('d/m/Y', strtotime($listPatient->birthdate))) ?></td>
-                            <td class="dNoneMobil"><?= htmlspecialchars($listPatient->phone)  ?></td>
-                            <td class="dNoneMobil"><?= htmlspecialchars($listPatient->mail) ?></td>
-                            <td><a class="m-1" title="Accéder au profil du patient" href="/controllers/profilPatientCtrl.php?id=<?= $listPatient->id ?>"><i class="fa-regular fa-eye"></i></a> <i class="fa-regular fa-trash-can m-1"></i></td>
+                            <td><?= htmlspecialchars($patient->lastname) ?></td>
+                            <td><?= htmlspecialchars($patient->firstname) ?></td>
+                            <td class="dNoneMobil"><?= htmlspecialchars(date('d/m/Y', strtotime($patient->birthdate))) ?></td>
+                            <td class="dNoneMobil"><a class="telmail" title="Envoyer un mail" href="tel:<?= htmlspecialchars($patient->phone)  ?>"><?= htmlspecialchars($patient->phone)  ?></a> </td>
+                            <td class="dNoneMobil"><a class="telmail" title="Appeler" href="mailto:<?= htmlspecialchars($patient->mail) ?>"><?= htmlspecialchars($patient->mail) ?></a></td>
+                            <td><a class="m-1 seeProfil" title="Accéder au profil du patient" href="/ProfilPatient?id=<?= $patient->id ?>&mail=<?= $patient->mail ?>"><i class="fa-regular fa-eye"></i></a> <i class="fa-regular fa-trash-can m-1"></i></td>
                         </tr> <?php } ?>
                 </tbody>
-
             </table>
         </div>
     </div>

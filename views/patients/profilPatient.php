@@ -44,7 +44,7 @@
                             <h4 class=" text-start ">Email</h4>
                             <input type="text" id="disabledTextInput" name="mail" class="form-control" value="<?= htmlspecialchars($profilPatient->mail) ?>">
                         </div>
-                        <small><?= $error['mail'] ?? '' ?></small>
+                        <p><?= $error['mail'] ?? '' ?></p>
 
                         <button type="submit" class="btn btn-primary btnUpdate">Modifier</button>
                     </fieldset>

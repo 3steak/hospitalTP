@@ -1,5 +1,7 @@
 <?php
 require_once(__DIR__ . '/../helpers/dd.php');
+require_once(__DIR__ . '/../helpers/db.php');
+
 class Patient extends Database
 {
     private string $lastname;
@@ -163,7 +165,7 @@ class Patient extends Database
             if ($sth) {
                 $sth->execute();
                 // renvoyer sur list si execute 
-                header('location: /controllers/listPatientCtrl.php?register=ok');
+                header('location: /ListPatients?register=ok');
                 die;
             } else {
                 echo 'erreur bindValue !';
@@ -184,24 +186,23 @@ class Patient extends Database
      *
      * @return array
      */
-    public function listPatient()
+    public static function listPatient(): array
     {
-        $request = 'SELECT * FROM patients;';
-        $listPatients = $this->queryRequest($request);
+        $request = 'SELECT * FROM `patients`;';
+        $database = new Database();
+        $listPatients = $database->queryRequest($request);
         return $listPatients;
     }
-
 
     /**
      * getPatient
      *
-     * @return array
+     * @return stdClass
      */
     public function getPatient()
     {
         $request = 'SELECT * FROM `patients` WHERE `id` =' . $this->getId() . ' ;';
-        $profilPatient = $this->queryRequest($request);
-        $profilPatient = $profilPatient[0];
+        $profilPatient = $this->executeFetch($request);
         return $profilPatient;
     }
 
@@ -243,27 +244,19 @@ class Patient extends Database
         $request = 'UPDATE `patients` 
                     SET `firstname`=:firstname, `lastname`=:lastname, `birthdate`=:birthdate, `phone`= :phone, `mail`= :mail
                     WHERE id =' . $this->getId() . ';';
-        try {
-            $sth = Database::connect()->prepare($request);
+        $sth = Database::connect()->prepare($request);
 
-            $sth->bindValue(':lastname', $this->getLastname(), PDO::PARAM_STR);
-            $sth->bindValue(':firstname', $this->getFirstname(), PDO::PARAM_STR);
-            $sth->bindValue(':birthdate', $this->getBirthdate(), PDO::PARAM_STR);
-            $sth->bindValue(':phone', $this->getPhone(), PDO::PARAM_STR);
-            $sth->bindValue(':mail', $this->getMail(), PDO::PARAM_STR);
-            $sth->execute();
-            // renvoyer sur list si execute 
-            header('location: /controllers/listPatientCtrl.php?register=update');
-            die;
+        $sth->bindValue(':lastname', $this->getLastname(), PDO::PARAM_STR);
+        $sth->bindValue(':firstname', $this->getFirstname(), PDO::PARAM_STR);
+        $sth->bindValue(':birthdate', $this->getBirthdate(), PDO::PARAM_STR);
+        $sth->bindValue(':phone', $this->getPhone(), PDO::PARAM_STR);
+        $sth->bindValue(':mail', $this->getMail(), PDO::PARAM_STR);
 
-            // si erreur ! renvoyer vers 404 ou  message erreur
-        } catch (\Throwable $th) {
-            $errorMsg = $th->getMessage();
-            include_once(__DIR__ . '/../views/templates/header.php');
-            include(__DIR__ . '/../views/errors.php');
-            include_once(__DIR__ . '/../views/templates/footer.php');
-            die;
-        }
+
+        $sth->execute();
+        // renvoyer sur list si execute 
+        header('location: /ListPatients?register=update');
+        die;
     }
 
     // FIN création class patient

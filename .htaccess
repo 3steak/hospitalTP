@@ -1,0 +1,9 @@
+RewriteEngine on
+
+RewriteRule Accueil /controllers/homeCtrl.php
+RewriteRule AddPatient /controllers/addPatientCtrl.php
+RewriteRule ListPatients /controllers/listPatientCtrl.php
+RewriteRule ProfilPatient /controllers/profilPatientCtrl.php
+RewriteRule AddAppointment /controllers/addAppointmentCtrl.php
+
+ErrorDocument 404 /404page.php

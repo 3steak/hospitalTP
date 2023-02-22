@@ -38,6 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
     }
+
+
     //============================= EMAIL ================
     $mail = trim(filter_input(INPUT_POST, 'mail', FILTER_SANITIZE_EMAIL));
 
@@ -79,16 +81,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error["email"] = '<small class= "text-black">L\'email existe déjà en Base de données</small>';
     }
     if (empty($error)) {
-
+        // Met nom et prénom en lower + Maj au début
+        $lastname = ucfirst(strtolower($lastname));
+        $firstname = ucfirst(strtolower($firstname));
         // DEFINIR LES ATTRIBUTS 
-
-        $patient = new Patient();
-        $patient->setLastname($lastname);
-        $patient->setFirstname($firstname);
-        $patient->setBirthdate($birthdate);
-        $patient->setPhone($phone);
-        $patient->setMail($mail);
-        $patient->addPatient();
+        try {
+            $patient = new Patient();
+            $patient->setLastname($lastname);
+            $patient->setFirstname($firstname);
+            $patient->setBirthdate($birthdate);
+            $patient->setPhone($phone);
+            $patient->setMail($mail);
+            $patient->addPatient();
+        } catch (\Throwable $th) {
+            $errorMsg = $th->getMessage();
+            include_once(__DIR__ . '/../views/templates/header.php');
+            include(__DIR__ . '/../views/errors.php');
+            include_once(__DIR__ . '/../views/templates/footer.php');
+            die;
+        }
     } else {
         include_once(__DIR__ . '/../views/templates/header.php');
         include(__DIR__ . '/../views/patients/addPatient.php');

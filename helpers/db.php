@@ -32,23 +32,25 @@ class Database
      */
     public function executeRequest($request): array
     {
-        // j'essaie
-        //  a mettre dans le ctrl 
-        try {
-            $stm = self::$connexion->prepare($request);
-            $stm->execute();
-            // je retourne directement le fetch du statement
-            //  qui sera stocké dans une variable
-            return $stm->fetchAll();
-
-            // si erreur ! renvoyer vers 404 ou  message erreur
-        } catch (\Throwable $th) {
-            $errorMsg = $th->getMessage();
-            include_once(__DIR__ . '/../views/templates/header.php');
-            include(__DIR__ . '/../views/errors.php');
-            include_once(__DIR__ . '/../views/templates/footer.php');
-            die;
-        }
+        $stm = self::$connexion->prepare($request);
+        $stm->execute();
+        $stm->fetchAll();
+        return $stm;
+    }
+    /** fonction pour preparer et executer ma requette sql et retourn en FETCH!
+     * executeRequest
+     *
+     * @param  mixed $request
+     * @return stdClass
+     */
+    public function executeFetch($request): stdClass
+    {
+        $stm = self::$connexion->prepare($request);
+        $stm->execute();
+        // je retourne directement le fetch du statement
+        //  qui sera stocké dans une variable
+        $result = $stm->fetch();
+        return $result;
     }
 
 
@@ -61,21 +63,10 @@ class Database
      */
     public function queryRequest($request): array
     {
-        // j'essaie
-        try {
-            $stm = self::$connexion->query($request);
-            // je retourne directement le fetch du statement
-            //  qui sera stocké dans une variable
-            return $stm->fetchAll();
-
-            // si erreur ! renvoyer vers 404 ou  message erreur
-        } catch (\Throwable $th) {
-            $errorMsg = $th->getMessage();
-            include_once(__DIR__ . '/../views/templates/header.php');
-            include(__DIR__ . '/../views/errors.php');
-            include_once(__DIR__ . '/../views/templates/footer.php');
-            die;
-        }
+        $stm = self::$connexion->query($request);
+        // je retourne directement le fetch du statement
+        //  qui sera stocké dans une variable
+        return $stm->fetchAll();
     }
 
 

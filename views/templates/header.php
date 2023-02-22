@@ -20,15 +20,15 @@
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="/controllers/addPatientCtrl.php">Ajouter un patient</a>
+                    <a class="nav-link" href="/AddPatient">Ajouter un patient</a>
                 </li>
                 <div class="barreco d-lg-none"></div>
                 <li class="nav-item">
-                    <a class="nav-link" href="/controllers/listPatientCtrl.php">Liste des patients</a>
+                    <a class="nav-link" href="/ListPatients">Liste des patients</a>
                 </li>
                 <div class="barreco d-lg-none"></div>
                 <li class="nav-item">
-                    <a class="nav-link" href="/controllers/clientsCtrl.php">Rendez-vous</a>
+                    <a class="nav-link" href="/AddAppointment">Prise de rendez-vous</a>
                 </li>
                 <div class="barreco d-lg-none"></div>
             </ul>
