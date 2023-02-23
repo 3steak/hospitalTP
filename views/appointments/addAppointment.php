@@ -11,7 +11,7 @@
                         <select class="pe-2" name="idPatient">
                             <option value="">Choisissez un patient</option>
                             <?php foreach ($listPatients as  $patient) { ?>
-                                <option value="<?= $patient->id ?>"><?= $patient->lastname ?> - <?= $patient->firstname ?> - <?= $patient->mail ?></option>
+                                <option value="<?= $patient->id ?>"><?= $patient->lastname ?> 💊 <?= $patient->firstname ?> ◼ <?= $patient->mail ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -24,7 +24,7 @@
                     <small><?= $error['date'] ?? '' ?></small>
                     <!-- HOUR -->
                     <div class=" field">
-                        <input class="pe-2" type="time" name="hour" value="" required>
+                        <input class="pe-2" type="time" name="hour" value="" min="09:00" max="18:00" step="1800" required>
                     </div>
                     <small><?= $error['hour'] ?? '' ?></small>
 

@@ -3,9 +3,9 @@ require_once(__DIR__ . '/../helpers/dd.php');
 require_once(__DIR__ . '/../models/Patient.php');
 class Appointment extends Patient
 {
-    private $id;
-    private $dateHour;
-    private $idPatient;
+    private int $id;
+    private string $dateHour;
+    private string $idPatient;
 
 
     public function __construct()
@@ -18,7 +18,7 @@ class Appointment extends Patient
      *
      * @return int
      */
-    public function getId()
+    public function getRdvId(): int
     {
         return  $this->id;
     }
@@ -40,7 +40,7 @@ class Appointment extends Patient
      *
      * @return  self
      */
-    public function setIdPatient($idPatient)
+    public function setIdPatient(int $idPatient)
     {
         $this->idPatient = $idPatient;
         return $this;
@@ -69,7 +69,7 @@ class Appointment extends Patient
      *
      * @return  self
      */
-    public function setDateHour($dateHour)
+    public function setDateHour(string $dateHour)
     {
         $this->dateHour = $dateHour;
 
@@ -83,13 +83,16 @@ class Appointment extends Patient
         $sth = Database::connect()->prepare($request);
         $sth->bindValue(':dateHour', $this->getDatehour(), PDO::PARAM_STR);
         $sth->bindValue(':idPatients', $this->getIdPatient(), PDO::PARAM_INT);
-        if ($sth) {
-            $sth->execute();
-            // renvoyer sur list si execute 
+        $sth->execute();
+        if ($sth->rowCount() > 0) {
+            // renvoyer sur list si ligne affectée 
             header('location: /ListAppointments?register=rdvOk');
             die;
         } else {
-            echo 'erreur bindValue !';
+            include_once(__DIR__ . '/../views/templates/header.php');
+            include(__DIR__ . '/../views/errors.php');
+            include_once(__DIR__ . '/../views/templates/footer.php');
+            die;
         }
     }
 
@@ -101,5 +104,40 @@ class Appointment extends Patient
         return $listAppointments;
     }
 
+    public static function getAppointment($id)
+    {
+        $request = 'SELECT * FROM appointments JOIN patients ON appointments.idPatients = patients.id WHERE `patients.id` =' . $id . ';';
+        $database = new Database();
+        $profilPatient = $database->executeFetch($request);
+        return $profilPatient;
+    }
+
+
+    public function updateAppointments()
+    {
+        $request = 'UPDATE `appointment` 
+                    SET `dateHour`=:dateHour,
+                    WHERE id = :id ;';
+        $sth = Database::connect()->prepare($request);
+        // ============================= AJOUTER idPatients ===============
+        // ============================= AJOUTER idPatients ===============
+        // ============================= AJOUTER idPatients ===============
+        // ============================= AJOUTER idPatients ===============
+        // ============================= AJOUTER idPatients ===============
+        // ============================= AJOUTER idPatients ===============
+        $sth->bindValue(':id', $this->getId(), PDO::PARAM_INT);
+        $sth->bindValue(':dateHour', $this->getDateHour(), PDO::PARAM_STR);
+        $sth->execute();
+        if ($sth->rowCount() > 0) {
+            // renvoyer sur list si execute 
+            header('location: /ListAppointment?register=update');
+            die;
+        } else {
+            include_once(__DIR__ . '/../views/templates/header.php');
+            include(__DIR__ . '/../views/errors.php');
+            include_once(__DIR__ . '/../views/templates/footer.php');
+            die;
+        }
+    }
     // Fin class 
 }

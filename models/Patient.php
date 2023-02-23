@@ -48,7 +48,9 @@ class Patient extends Database
     {
         $this->firstname = $firstname;
     }
-    public function getFirstname()
+
+
+    public function getFirstname(): string
     {
         return $this->firstname;
     }
@@ -69,7 +71,7 @@ class Patient extends Database
      *
      * @return string
      */
-    public function getBirthdate()
+    public function getBirthdate(): string
     {
         return $this->birthdate;
     }
@@ -90,7 +92,7 @@ class Patient extends Database
      *
      * @return string
      */
-    public function getPhone()
+    public function getPhone(): string
     {
         return $this->phone;
     }
@@ -111,9 +113,9 @@ class Patient extends Database
      *
      * @return string
      */
-    public function getMail()
+    public function getMail(): string
     {
-        return   $this->mail;
+        return $this->mail;
     }
 
 
@@ -122,9 +124,9 @@ class Patient extends Database
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
-        return  $this->id;
+        return $this->id;
     }
 
 
@@ -154,25 +156,20 @@ class Patient extends Database
         $request = 'INSERT INTO `patients` (`firstname`, `lastname`, `birthdate`, `phone`, `mail`) VALUES
         (:lastname,:firstname,:birthdate,:phone,:mail)';
 
-        try {
-            $sth = Database::connect()->prepare($request);
 
-            $sth->bindValue(':lastname', $this->getLastname(), PDO::PARAM_STR);
-            $sth->bindValue(':firstname', $this->getFirstname(), PDO::PARAM_STR);
-            $sth->bindValue(':birthdate', $this->getBirthdate(), PDO::PARAM_STR);
-            $sth->bindValue(':phone', $this->getPhone(), PDO::PARAM_STR);
-            $sth->bindValue(':mail', $this->getMail(), PDO::PARAM_STR);
-            if ($sth) {
-                $sth->execute();
-                // renvoyer sur list si execute 
-                header('location: /ListPatients?register=ok');
-                die;
-            } else {
-                echo 'erreur bindValue !';
-            }
-            // si erreur ! renvoyer vers 404 ou  message erreur
-        } catch (\Throwable $th) {
-            $errorMsg = $th->getMessage();
+        $sth = Database::connect()->prepare($request);
+
+        $sth->bindValue(':lastname', $this->getLastname(), PDO::PARAM_STR);
+        $sth->bindValue(':firstname', $this->getFirstname(), PDO::PARAM_STR);
+        $sth->bindValue(':birthdate', $this->getBirthdate(), PDO::PARAM_STR);
+        $sth->bindValue(':phone', $this->getPhone(), PDO::PARAM_STR);
+        $sth->bindValue(':mail', $this->getMail(), PDO::PARAM_STR);
+        $sth->execute();
+        if ($sth->rowCount() > 0) {
+            // renvoyer sur list si ligne affectée 
+            header('location: /ListPatients?register=ok');
+            die;
+        } else {
             include_once(__DIR__ . '/../views/templates/header.php');
             include(__DIR__ . '/../views/errors.php');
             include_once(__DIR__ . '/../views/templates/footer.php');
@@ -188,7 +185,7 @@ class Patient extends Database
      */
     public static function listPatient(): array
     {
-        $request = 'SELECT * FROM `patients`;';
+        $request = 'SELECT * FROM `patients` ORDER BY `lastname`;';
         $database = new Database();
         $listPatients = $database->queryRequest($request);
         return $listPatients;
@@ -199,10 +196,11 @@ class Patient extends Database
      *
      * @return stdClass
      */
-    public function getPatient()
+    public static function getPatient($id)
     {
-        $request = 'SELECT * FROM `patients` WHERE `id` =' . $this->getId() . ' ;';
-        $profilPatient = $this->executeFetch($request);
+        $request = 'SELECT * FROM `patients` WHERE `id` =' . $id . ';';
+        $database = new Database();
+        $profilPatient = $database->executeFetch($request);
         return $profilPatient;
     }
 
@@ -215,18 +213,10 @@ class Patient extends Database
     public static function isMailExist(string $mail)
     {
         $request = 'SELECT * FROM `patients` WHERE `mail` = ? ;';
-        try {
-            $sth = Database::connect()->prepare($request);
-            $sth->execute([$mail]);
-            $result = $sth->fetchAll();
-            return !empty($result) ?? false;
-        } catch (\Throwable $th) {
-            $errorMsg = $th->getMessage();
-            include_once(__DIR__ . '/../views/templates/header.php');
-            include(__DIR__ . '/../views/errors.php');
-            include_once(__DIR__ . '/../views/templates/footer.php');
-            die;
-        }
+        $sth = Database::connect()->prepare($request);
+        $sth->execute([$mail]);
+        $result = $sth->fetchAll();
+        return !empty($result) ?? false;
     }
 
 
@@ -237,26 +227,28 @@ class Patient extends Database
      */
     public function updatePatient()
     {
-        // $request = 'UPDATE `patients` 
-        // SET `firstname`=:firstname, `lastname`=:lastname, `birthdate`=:birthdate, `phone`= :phone, `mail`= :mail
-        // WHERE id =' . $this->getId() . ' AND `mail` <> (SELECT * FROM (SELECT `mail` FROM `patients` WHERE id=' . $this->getId() . ') as patient_mail);';
-
         $request = 'UPDATE `patients` 
                     SET `firstname`=:firstname, `lastname`=:lastname, `birthdate`=:birthdate, `phone`= :phone, `mail`= :mail
-                    WHERE id =' . $this->getId() . ';';
+                    WHERE id = :id ;';
         $sth = Database::connect()->prepare($request);
 
+        $sth->bindValue(':id', $this->getId(), PDO::PARAM_INT);
         $sth->bindValue(':lastname', $this->getLastname(), PDO::PARAM_STR);
         $sth->bindValue(':firstname', $this->getFirstname(), PDO::PARAM_STR);
         $sth->bindValue(':birthdate', $this->getBirthdate(), PDO::PARAM_STR);
         $sth->bindValue(':phone', $this->getPhone(), PDO::PARAM_STR);
         $sth->bindValue(':mail', $this->getMail(), PDO::PARAM_STR);
-
-
         $sth->execute();
-        // renvoyer sur list si execute 
-        header('location: /ListPatients?register=update');
-        die;
+        if ($sth->rowCount() > 0) {
+            // renvoyer sur list si execute 
+            header('location: /ListPatients?register=update');
+            die;
+        } else {
+            include_once(__DIR__ . '/../views/templates/header.php');
+            include(__DIR__ . '/../views/errors.php');
+            include_once(__DIR__ . '/../views/templates/footer.php');
+            die;
+        }
     }
 
     // FIN création class patient

@@ -9,23 +9,12 @@ flash('update', 'Patient modifié avec succès ! ', FLASH_SUCCESS);
 
 // Recup le patient id = id
 if (!empty($_GET['id'])) {
-
-    $patient = new Patient();
+    // FILTRE trim FILTERVAR
     $idPatient = $_GET['id'];
     $mailPatient = $_GET['mail'];
-    try {
-        $patient->setMail($mailPatient);
-        $patient->setId($idPatient);
-    } catch (\Throwable $th) {
-        $errorMsg = $th->getMessage();
-        include_once(__DIR__ . '/../views/templates/header.php');
-        include(__DIR__ . '/../views/errors.php');
-        include_once(__DIR__ . '/../views/templates/footer.php');
-        die;
-    }
 
     try {
-        $profilPatient = $patient->getPatient();
+        $profilPatient = Patient::getPatient($idPatient);
     } catch (\Throwable $th) {
         $errorMsg = $th->getMessage();
         include_once(__DIR__ . '/../views/templates/header.php');
@@ -108,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $error['phone'] = 'Numéro de téléphone non valide';
         }
     }
-    if ($mail != $patient->getMail() && $patient::isMailExist($mail)) {
+    if ($mail != $mailPatient && $patient::isMailExist($mail)) {
         $error['mail'] = '<small class="text-black">Le mail renseigné existe déjà !</small>';
     }
     if (empty($error)) {

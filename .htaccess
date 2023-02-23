@@ -6,5 +6,6 @@ RewriteRule ListPatients /controllers/listPatientCtrl.php
 RewriteRule ProfilPatient /controllers/profilPatientCtrl.php
 RewriteRule AddAppointment /controllers/addAppointmentCtrl.php
 RewriteRule ListAppointments /controllers/listAppointmentCtrl.php
+RewriteRule ProfilAppointment /controllers/appointmentCtrl.php
 
 ErrorDocument 404 /404page.php
