@@ -7,24 +7,24 @@ require_once(__DIR__ . '/../helpers/flash.php');
 flash('update', 'Patient modifié avec succès ! ', FLASH_SUCCESS);
 
 
-// Recup le patient id = id
-if (!empty($_GET['id'])) {
-    // FILTRE trim FILTERVAR
-    $idPatient = $_GET['id'];
-    $mailPatient = $_GET['mail'];
 
-    try {
-        $profilPatient = Patient::getPatient($idPatient);
-    } catch (\Throwable $th) {
-        $errorMsg = $th->getMessage();
-        include_once(__DIR__ . '/../views/templates/header.php');
-        include(__DIR__ . '/../views/errors.php');
-        include_once(__DIR__ . '/../views/templates/footer.php');
-        die;
+// FILTRE ID AVEC INTVAL
+$idPatient = intval(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
+
+try {
+    if (Patient::isIdExist($idPatient) === false) {
+        throw new Exception("Ce patient n'existe pas", 1);
     }
-} else {
-    echo 'id inexistant';
+    $profilPatient = Patient::getPatient($idPatient);
+    // get appointment
+} catch (\Throwable $th) {
+    $errorMsg = $th->getMessage();
+    include_once(__DIR__ . '/../views/templates/header.php');
+    include(__DIR__ . '/../views/errors.php');
+    include_once(__DIR__ . '/../views/templates/footer.php');
+    die;
 }
+
 
 // UPDATE le Patient
 

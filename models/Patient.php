@@ -198,9 +198,12 @@ class Patient extends Database
      */
     public static function getPatient($id)
     {
-        $request = 'SELECT * FROM `patients` WHERE `id` =' . $id . ';';
-        $database = new Database();
-        $profilPatient = $database->executeFetch($request);
+        $request = 'SELECT * FROM `patients` WHERE `id` =:id ;';
+
+        $sth = Database::connect()->prepare($request);
+        $sth->bindValue(':id', $id, PDO::PARAM_INT);
+        $sth->execute();
+        $profilPatient = $sth->fetch();
         return $profilPatient;
     }
 
@@ -216,6 +219,16 @@ class Patient extends Database
         $sth = Database::connect()->prepare($request);
         $sth->execute([$mail]);
         $result = $sth->fetchAll();
+        return !empty($result) ?? false;
+    }
+
+    //VERIF ID
+    public static function isIdExist(int $id)
+    {
+        $request = 'SELECT * FROM `patients` WHERE `id` = ? ;';
+        $sth = Database::connect()->prepare($request);
+        $sth->execute([$id]);
+        $result = $sth->fetch();
         return !empty($result) ?? false;
     }
 

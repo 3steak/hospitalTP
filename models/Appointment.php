@@ -98,35 +98,41 @@ class Appointment extends Patient
 
     public static function listAppointment(): array
     {
-        $request = 'SELECT * FROM appointments JOIN patients ON appointments.idPatients = patients.id;';
+        $request = 'SELECT appointments.id, `dateHour`, `idPatients`, `lastname`, `firstname`, `mail`
+                    FROM `appointments` JOIN `patients` 
+                    ON appointments.idPatients = patients.id;';
         $database = new Database();
         $listAppointments = $database->queryRequest($request);
         return $listAppointments;
     }
 
+    /**
+     * getAppointment
+     *
+     * @param  mixed $idPatient
+     * @return object
+     */
     public static function getAppointment($id)
     {
-        $request = 'SELECT * FROM appointments JOIN patients ON appointments.idPatients = patients.id WHERE `patients.id` =' . $id . ';';
-        $database = new Database();
-        $profilPatient = $database->executeFetch($request);
-        return $profilPatient;
+        $request = 'SELECT appointments.id, `idPatients`, `lastname`, `firstname`, `mail`,`dateHour`
+                    FROM `appointments` JOIN `patients` 
+                    ON appointments.idPatients = patients.id  WHERE appointments.id =:id;';
+        $sth = Database::connect()->prepare($request);
+        $sth->bindValue(':id', $id, PDO::PARAM_INT);
+        $sth->execute();
+        $appointment = $sth->fetch();
+        return $appointment;
     }
 
-
-    public function updateAppointments()
+    public function updateAppointment()
     {
         $request = 'UPDATE `appointment` 
-                    SET `dateHour`=:dateHour,
+                    SET `dateHour`=:dateHour, `idPatients`=:idPatients,
                     WHERE id = :id ;';
         $sth = Database::connect()->prepare($request);
-        // ============================= AJOUTER idPatients ===============
-        // ============================= AJOUTER idPatients ===============
-        // ============================= AJOUTER idPatients ===============
-        // ============================= AJOUTER idPatients ===============
-        // ============================= AJOUTER idPatients ===============
-        // ============================= AJOUTER idPatients ===============
         $sth->bindValue(':id', $this->getId(), PDO::PARAM_INT);
         $sth->bindValue(':dateHour', $this->getDateHour(), PDO::PARAM_STR);
+        $sth->bindValue(':dateHour', $this->getIdPatient(), PDO::PARAM_INT);
         $sth->execute();
         if ($sth->rowCount() > 0) {
             // renvoyer sur list si execute 
@@ -138,6 +144,18 @@ class Appointment extends Patient
             include_once(__DIR__ . '/../views/templates/footer.php');
             die;
         }
+    }
+
+    //  Verif id 
+
+    //VERIF ID
+    public static function isIdRdvExist(int $id)
+    {
+        $request = 'SELECT * FROM `appointments` WHERE `id` = ? ;';
+        $sth = Database::connect()->prepare($request);
+        $sth->execute([$id]);
+        $result = $sth->fetch();
+        return !empty($result) ?? false;
     }
     // Fin class 
 }

@@ -20,7 +20,7 @@
                             <td><?= htmlspecialchars($appointment->firstname) ?></td>
                             <td class=""><?= htmlspecialchars(date('d/m/Y', strtotime($appointment->dateHour))) ?></td>
                             <td class=""><?= htmlspecialchars(date('H:i', strtotime($appointment->dateHour))) ?></td>
-                            <td><a class="m-1 seeProfil" title="Accéder au rendez-vous" href="/Appointment?id=<?= $appointment->id ?>&mail=<?= $appointment->mail ?>"><i class="fa-regular fa-eye"></i></a> <i class="fa-regular fa-trash-can m-1"></i></td>
+                            <td><a class="m-1 seeProfil" title="Accéder au rendez-vous" href="/controllers/appointmentCtrl.php?id=<?= $appointment->id ?>"><i class="fa-regular fa-eye"></i></a> <i class="fa-regular fa-trash-can m-1"></i></td>
                         </tr> <?php } ?>
                 </tbody>
             </table>

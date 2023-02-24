@@ -24,8 +24,5 @@ if (!empty($_GET) && $_GET['register'] == 'ok') {
 if (!empty($_GET) && $_GET['register'] == 'update') {
     flash('update');
 }
-if (!empty($_GET) && $_GET['register'] == 'rdvOk') {
-    flash('addRDV');
-}
 include(__DIR__ . '/../views/patients/listPatient.php');
 include_once(__DIR__ . '/../views/templates/footer.php');

@@ -11,7 +11,6 @@ $listPatients = Patient::listPatient();
 // JE FILTRE MON RDV 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-
     // ================================  idPatient ====================================
 
     $idPatient = trim(filter_input(INPUT_POST, 'idPatient', FILTER_SANITIZE_NUMBER_INT));
