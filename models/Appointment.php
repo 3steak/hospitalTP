@@ -126,22 +126,20 @@ class Appointment extends Patient
 
     public function updateAppointment()
     {
-        $request = 'UPDATE `appointment` 
-                    SET `dateHour`=:dateHour, `idPatients`=:idPatients,
+        $request = 'UPDATE `appointments` 
+                    SET `dateHour`=:dateHour, `idPatients`=:idPatients
                     WHERE id = :id ;';
         $sth = Database::connect()->prepare($request);
-        $sth->bindValue(':id', $this->getId(), PDO::PARAM_INT);
-        $sth->bindValue(':dateHour', $this->getDateHour(), PDO::PARAM_STR);
-        $sth->bindValue(':dateHour', $this->getIdPatient(), PDO::PARAM_INT);
+        $sth->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $sth->bindValue(':idPatients', $this->idPatient, PDO::PARAM_INT);
+        $sth->bindValue(':dateHour', $this->dateHour, PDO::PARAM_STR);
         $sth->execute();
         if ($sth->rowCount() > 0) {
             // renvoyer sur list si execute 
-            header('location: /ListAppointment?register=update');
+            header('location: /ListAppointments?register=update');
             die;
         } else {
-            include_once(__DIR__ . '/../views/templates/header.php');
-            include(__DIR__ . '/../views/errors.php');
-            include_once(__DIR__ . '/../views/templates/footer.php');
+            header('location: /ListAppointments?register=noUpdate');
             die;
         }
     }

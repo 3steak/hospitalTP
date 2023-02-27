@@ -12,7 +12,7 @@ $(document).ready(function () {
             infoPostFix: "",
             loadingRecords: "Chargement en cours...",
             zeroRecords: "Aucun &eacute;l&eacute;ment &agrave; afficher",
-            emptyTable: "Aucune donnée disponible dans le tableau",
+            emptyTable: "Aucun patient ou rendez-vous enregistré",
             paginate: {
                 first: "Premier",
                 previous: "Pr&eacute;c&eacute;dent",

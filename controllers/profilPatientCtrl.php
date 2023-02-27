@@ -5,6 +5,7 @@ require_once(__DIR__ . '/../models/Patient.php');
 require_once(__DIR__ . '/../config/constant.php');
 require_once(__DIR__ . '/../helpers/flash.php');
 flash('update', 'Patient modifié avec succès ! ', FLASH_SUCCESS);
+flash('noUpdate', 'Patient non modifié ! ', FLASH_WARNING);
 
 
 
@@ -16,7 +17,13 @@ try {
         throw new Exception("Ce patient n'existe pas", 1);
     }
     $profilPatient = Patient::getPatient($idPatient);
-    // get appointment
+    $appointments = Patient::getAppointments($idPatient);
+
+    $listPatients = Patient::listPatient();
+    //  Si profilPatient return false
+    if (!$profilPatient) {
+        throw new Exception('Id non valide', 1);
+    }
 } catch (\Throwable $th) {
     $errorMsg = $th->getMessage();
     include_once(__DIR__ . '/../views/templates/header.php');
@@ -97,21 +104,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $error['phone'] = 'Numéro de téléphone non valide';
         }
     }
-    if ($mail != $mailPatient && $patient::isMailExist($mail)) {
+    if ($mail != $mail && $patient::isMailExist($mail)) {
         $error['mail'] = '<small class="text-black">Le mail renseigné existe déjà !</small>';
     }
     if (empty($error)) {
 
         // DEFINIR LES ATTRIBUTS 
+        try {
+            $patient = new Patient();
+            $patient->setId($idPatient);
+            $patient->setLastname($lastname);
+            $patient->setFirstname($firstname);
+            $patient->setBirthdate($birthdate);
+            $patient->setPhone($phone);
+            $patient->setMail($mail);
+            $isUpdated = $patient->updatePatient();
 
-        $patient = new Patient();
-        $patient->setId($idPatient);
-        $patient->setLastname($lastname);
-        $patient->setFirstname($firstname);
-        $patient->setBirthdate($birthdate);
-        $patient->setPhone($phone);
-        $patient->setMail($mail);
-        $patient->updatePatient();
+            if (!$isUpdated) {
+                throw new Exception('Patient non mis a jour', 1);
+            }
+        } catch (\Throwable $th) {
+            $errorMsg = $th->getMessage();
+            include_once(__DIR__ . '/../views/templates/header.php');
+            include(__DIR__ . '/../views/errors.php');
+            include_once(__DIR__ . '/../views/templates/footer.php');
+            die;
+        }
     } else {
         include_once(__DIR__ . '/../views/templates/header.php');
         include(__DIR__ . '/../views/patients/profilPatient.php');

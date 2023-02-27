@@ -194,10 +194,11 @@ class Patient extends Database
     /**
      * getPatient
      *
-     * @return stdClass
+     * @return object
      */
-    public static function getPatient($id)
+    public static function getPatient(int $id): object|bool
     {
+        // protection contre injection sql grace à :id et prepare
         $request = 'SELECT * FROM `patients` WHERE `id` =:id ;';
 
         $sth = Database::connect()->prepare($request);
@@ -205,6 +206,24 @@ class Patient extends Database
         $sth->execute();
         $profilPatient = $sth->fetch();
         return $profilPatient;
+    }
+
+    /**
+     * getAppointment
+     *
+     * @param  mixed $idPatient
+     * @return object
+     */
+    public static function getAppointments($id)
+    {
+        $request = 'SELECT appointments.id, `idPatients`, `lastname`, `firstname`, `mail`,`dateHour`
+                    FROM `appointments` JOIN `patients` 
+                    ON appointments.idPatients = patients.id  WHERE appointments.idPatients =:id;';
+        $sth = Database::connect()->prepare($request);
+        $sth->bindValue(':id', $id, PDO::PARAM_INT);
+        $sth->execute();
+        $appointments = $sth->fetchAll();
+        return $appointments;
     }
 
     /**
@@ -253,13 +272,11 @@ class Patient extends Database
         $sth->bindValue(':mail', $this->getMail(), PDO::PARAM_STR);
         $sth->execute();
         if ($sth->rowCount() > 0) {
-            // renvoyer sur list si execute 
+            // renvoyer sur list avec flash si update ou non
             header('location: /ListPatients?register=update');
             die;
         } else {
-            include_once(__DIR__ . '/../views/templates/header.php');
-            include(__DIR__ . '/../views/errors.php');
-            include_once(__DIR__ . '/../views/templates/footer.php');
+            header('location: /ListPatients?register=noUpdate');
             die;
         }
     }

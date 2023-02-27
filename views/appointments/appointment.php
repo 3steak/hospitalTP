@@ -7,7 +7,7 @@
                     <p class="modifExplain">Cliquer sur le boutton ci-dessous pour accéder à la modification</p>
                     <a class="triggerUdpdate"><i class="fa-solid fa-pen-to-square fa-2xl "></i></a>
                 </div>
-                <form action="" method="post">
+                <form method="post">
                     <fieldset disabled>
                         <div class="">
 
