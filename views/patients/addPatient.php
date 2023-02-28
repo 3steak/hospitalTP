@@ -1,7 +1,7 @@
 <div class="container form mb-5">
     <div class="row">
         <div class="col-12 text-center">
-            <div class="content">
+            <div class="content mx-auto">
                 <h2 class="">Ajouter un patient</h2>
 
                 <?= $error['email'] ?? '' ?>

@@ -28,11 +28,15 @@
                 </li>
                 <div class="barreco d-lg-none"></div>
                 <li class="nav-item">
-                    <a class="nav-link" href="/AddAppointment">Prise de rendez-vous</a>
+                    <a class="nav-link" href="/AddAppointment">Ajouter un rendez-vous</a>
                 </li>
                 <div class="barreco d-lg-none"></div>
                 <li class="nav-item">
                     <a class="nav-link" href="/ListAppointments">Liste des rendez-vous</a>
+                </li>
+                <div class="barreco d-lg-none"></div>
+                <li class="nav-item">
+                    <a class="nav-link" href="/AddPatientApt">Ajouter un patient avec son rendez-vous</a>
                 </li>
                 <div class="barreco d-lg-none"></div>
             </ul>

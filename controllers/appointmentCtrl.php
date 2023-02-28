@@ -65,6 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $error['hour'] = '<small class="text-black">L`\'heure n\'est pas au bon format.</small>';
         }
     }
+
+
     if (empty($error)) {
         $dateHour  = $date . ' ' . $hour;
         try {

@@ -34,6 +34,7 @@ p {
 }
 
 
+
 a {
     text-decoration: none !important;
 }
@@ -44,6 +45,7 @@ a {
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
     background: var(--main-bg-color) !important;
     color: var(--main-font-color) !important;
+    height: 30vh !important;
 }
 
 .card:hover {
@@ -219,9 +221,26 @@ label {
     color: var(--main-bg-color) !important;
 }
 
+.deleteApt {
+    text-decoration: none !important;
+    color: var(--main-red-color) !important;
+}
+
+span {
+    font-weight: 600;
+}
+
 @media only screen and (max-width: 780px) {
     .dNoneMobil {
         display: none;
+    }
+
+    .content {
+        width: 80vw;
+        background: var(--main-font-color);
+        border-radius: 10px;
+        padding: 30px 20px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
     }
 }
 

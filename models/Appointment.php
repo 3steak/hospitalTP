@@ -5,7 +5,7 @@ class Appointment extends Patient
 {
     private int $id;
     private string $dateHour;
-    private string $idPatient;
+    private int $idPatient;
 
 
     public function __construct()
@@ -51,7 +51,7 @@ class Appointment extends Patient
      *
      * @return int
      */
-    public function getIdPatient()
+    public function getIdPatient(): int
     {
         return  $this->idPatient;
     }
@@ -59,7 +59,7 @@ class Appointment extends Patient
     /**
      * Recupère la dateheure du rdv
      */
-    public function getDateHour()
+    public function getDateHour(): string
     {
         return $this->dateHour;
     }
@@ -75,6 +75,14 @@ class Appointment extends Patient
 
         return $this;
     }
+
+
+
+    /**Permet d'ajouter un rdv
+     * addAppointment
+     *
+     * @return void
+     */
     public function addAppointment()
     {
         $request = "INSERT INTO `appointments` (`dateHour`, `idPatients`) VALUES
@@ -96,6 +104,12 @@ class Appointment extends Patient
         }
     }
 
+
+    /**Permet de lister les rdv
+     * listAppointment
+     *
+     * @return array
+     */
     public static function listAppointment(): array
     {
         $request = 'SELECT appointments.id, `dateHour`, `idPatients`, `lastname`, `firstname`, `mail`
@@ -106,13 +120,13 @@ class Appointment extends Patient
         return $listAppointments;
     }
 
-    /**
+    /** Permet de récupérer un rdv selon un id
      * getAppointment
      *
-     * @param  mixed $idPatient
+     * @param  mixed $id
      * @return object
      */
-    public static function getAppointment($id)
+    public static function getAppointment($id): object
     {
         $request = 'SELECT appointments.id, `idPatients`, `lastname`, `firstname`, `mail`,`dateHour`
                     FROM `appointments` JOIN `patients` 
@@ -124,6 +138,34 @@ class Appointment extends Patient
         return $appointment;
     }
 
+    /**Permet de supprimer un rendez-vous
+     * deleteAppointment
+     *
+     * @param  mixed $id
+     * @return void
+     */
+    public static function deleteAppointment($id)
+    {
+        $request = 'DELETE FROM `appointments` WHERE id = :id;';
+        $sth = Database::connect()->prepare($request);
+        $sth->bindValue(':id', $id, PDO::PARAM_INT);
+        $sth->execute();
+        if ($sth->rowCount() > 0) {
+            // renvoyer sur list si execute 
+            header('location: /ListAppointments?register=deleted');
+            die;
+        } else {
+            header('location: /ListAppointments?register=noDeleted');
+            die;
+        }
+    }
+
+
+    /** Permet de mettre à jour le rdv
+     * updateAppointment
+     *
+     * @return void
+     */
     public function updateAppointment()
     {
         $request = 'UPDATE `appointments` 
@@ -144,15 +186,38 @@ class Appointment extends Patient
         }
     }
 
-    //  Verif id 
 
-    //VERIF ID
-    public static function isIdRdvExist(int $id)
+    //  Verif id 
+    /**
+     * isIdRdvExist
+     *
+     * @param  mixed $id
+     * @return bool
+     */
+    public static function isIdRdvExist(int $id): bool
     {
         $request = 'SELECT * FROM `appointments` WHERE `id` = ? ;';
         $sth = Database::connect()->prepare($request);
         $sth->execute([$id]);
         $result = $sth->fetch();
+        return !empty($result) ?? false;
+    }
+
+
+    /** Retourne true ou false si la date existe en fonction de la dateHour
+     * isAptExist
+     *
+     * @param  mixed $dateHour
+     * @return bool
+     */
+    public static function isAptExist(string $dateHour): bool
+    {
+        $request = 'SELECT `dateHour`
+        FROM `appointments` JOIN `patients` 
+        ON appointments.idPatients = patients.id  WHERE appointments.dateHour =?;';
+        $sth = Database::connect()->prepare($request);
+        $sth->execute([$dateHour]);
+        $result = $sth->fetchAll();
         return !empty($result) ?? false;
     }
     // Fin class 

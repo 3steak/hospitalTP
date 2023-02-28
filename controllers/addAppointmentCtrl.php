@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
     // =============================== DATE ===========================
+    // Sanitize number int garde les chiffres les + et les moins
     $date = trim(filter_input(INPUT_POST, 'date', FILTER_SANITIZE_NUMBER_INT));
 
     if (empty($date)) {
@@ -41,13 +42,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error['hour'] = '<small class="text-black">Veuillez rentrer une heure de rendez vous</small>';
     } else {
         $isOk = filter_var($hour, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEXP_HOUR . '/')));
+
         if (!$isOk) {
             $error['hour'] = '<small class="text-black">L`\'heure n\'est pas au bon format.</small>';
         }
     }
 
+    $dateHour  = $date . ' ' . $hour;
+    if (Appointment::isAptExist($dateHour)) {
+        $error["apt"] = '<small class= "text-black">Le rendez-vous existe déjà en Base de données pour ce patient</small>';
+    }
     if (empty($error)) {
-        $dateHour  = $date . ' ' . $hour;
+
         try {
             $appointment = new Appointment();
             $appointment->setDateHour($dateHour);
@@ -60,6 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             include_once(__DIR__ . '/../views/templates/footer.php');
             die;
         }
+    } else {
+        include_once(__DIR__ . '/../views/templates/header.php');
+        include(__DIR__ . '/../views/appointments/addAppointment.php');
     }
     // si EMPTY $POST
 } else {

@@ -241,6 +241,7 @@ class Patient extends Database
         return !empty($result) ?? false;
     }
 
+
     //VERIF ID
     public static function isIdExist(int $id)
     {
@@ -277,6 +278,24 @@ class Patient extends Database
             die;
         } else {
             header('location: /ListPatients?register=noUpdate');
+            die;
+        }
+    }
+
+
+
+    public static function deletePatient($id)
+    {
+        $request = 'DELETE FROM `patients` WHERE id = :id;';
+        $sth = Database::connect()->prepare($request);
+        $sth->bindValue(':id', $id, PDO::PARAM_INT);
+        $sth->execute();
+        if ($sth->rowCount() > 0) {
+            // renvoyer sur list si execute 
+            header('location: /ListPatients?register=deleted');
+            die;
+        } else {
+            header('location: /ListPatients?register=noDeleted');
             die;
         }
     }
