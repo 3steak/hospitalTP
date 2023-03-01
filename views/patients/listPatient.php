@@ -15,7 +15,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php var_dump($listPatients);
+                    <?php
                     foreach ($listPatients as $patient) { ?>
                         <tr>
                             <td><?= htmlspecialchars($patient->lastname) ?></td>
@@ -24,7 +24,7 @@
                             <td class="dNoneMobil"><a class="telmail" title="Envoyer un mail" href="tel:<?= htmlspecialchars($patient->phone)  ?>"><?= htmlspecialchars($patient->phone)  ?></a> </td>
                             <td class="dNoneMobil"><a class="telmail" title="Appeler" href="mailto:<?= htmlspecialchars($patient->mail) ?>"><?= htmlspecialchars($patient->mail) ?></a></td>
                             <td><a class="m-1 seeProfil" title="Accéder au profil du patient" href="/ProfilPatient?id=<?= $patient->id ?>"><i class="fa-regular fa-eye"></i></a>
-                                <a class="m-1 deleteApt" title="Supprimer le patient" data-bs-toggle="modal" data-bs-whatever="<?= $patient->id ?>" data-bs-target="#validateModal">
+                                <a class="m-1 deleteApt" title="Supprimer le patient" data-bs-toggle="modal" data-bs-target="#validateModal" data-name="<?= htmlspecialchars($patient->lastname) ?> <?= htmlspecialchars($patient->firstname) ?>" data-id=<?= $patient->id ?>>
                                     <i class="fa-regular fa-trash-can m-1"></i>
                             </td>
                         </tr> <?php } ?>
@@ -40,12 +40,12 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Supprimer le patient <span><?= htmlspecialchars($patient->lastname) ?> <?= htmlspecialchars($patient->firstname) ?></span> ? <br>
+                        Supprimer le patient <span class="fullname"></span> ? <br>
                         Cela supprimera aussi ses rendez-vous !
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <a class="btn btn-primary" href="/DeletePatient?id=<?= $patient->id ?>" role="button">Supprimer</a>
+                        <a class="btn btn-primary " id="linkDelete" href="/DeletePatient?id=" role="button">Supprimer</a>
                     </div>
                 </div>
             </div>

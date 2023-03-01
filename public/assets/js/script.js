@@ -50,6 +50,27 @@ $(document).ready(function () {
 });
 
 
+// Récupération des data-set 
+let trashes = document.querySelectorAll('.deleteApt');
+for (let trash of trashes) {
+    trash.addEventListener('click', persoModal)
+}
+function persoModal() {
+    // Attributs data
+    let id = this.dataset.id;
+    let name = this.dataset.name;
+    console.log(name);
+
+    // Injection in modal
+    document.querySelector("#validateModal .fullname").innerText = name;
+    let link = document.querySelector("#linkDelete");
+    let href = link.getAttribute('href');
+    link.setAttribute('href', href + id)
+}
+
+
+
+
 
 //  ENLEVE LE DISABLE DU FORM PROFILPATIENT
 
