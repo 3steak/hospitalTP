@@ -58,7 +58,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $appointment = new Appointment();
             $appointment->setDateHour($dateHour);
             $appointment->setIdPatient($idPatient);
-            $appointment->addAppointment();
+            $result = $appointment->addAppointment();
+            if ($result) {
+                // renvoyer sur list si ligne affectée 
+                header('location: /ListAppointments?register=rdvOk');
+                die;
+            } else {
+                throw new Exception('Rendez-vous non ajouté', 1);
+                die;
+            }
         } catch (\Throwable $th) {
             $errorMsg = $th->getMessage();
             include_once(__DIR__ . '/../views/templates/header.php');

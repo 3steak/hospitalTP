@@ -36,7 +36,7 @@
                 </li>
                 <div class="barreco d-lg-none"></div>
                 <li class="nav-item">
-                    <a class="nav-link" href="/AddPatientApt">Ajouter un patient avec son rendez-vous</a>
+                    <a class="nav-link" href="/controllers/addPatientAptCtrl.php">Ajouter un patient avec son rendez-vous</a>
                 </li>
                 <div class="barreco d-lg-none"></div>
             </ul>

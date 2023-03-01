@@ -156,7 +156,6 @@ class Patient extends Database
         $request = 'INSERT INTO `patients` (`firstname`, `lastname`, `birthdate`, `phone`, `mail`) VALUES
         (:lastname,:firstname,:birthdate,:phone,:mail)';
 
-
         $sth = Database::connect()->prepare($request);
 
         $sth->bindValue(':lastname', $this->getLastname(), PDO::PARAM_STR);
@@ -165,16 +164,8 @@ class Patient extends Database
         $sth->bindValue(':phone', $this->getPhone(), PDO::PARAM_STR);
         $sth->bindValue(':mail', $this->getMail(), PDO::PARAM_STR);
         $sth->execute();
-        if ($sth->rowCount() > 0) {
-            // renvoyer sur list si ligne affectée 
-            header('location: /ListPatients?register=ok');
-            die;
-        } else {
-            include_once(__DIR__ . '/../views/templates/header.php');
-            include(__DIR__ . '/../views/errors.php');
-            include_once(__DIR__ . '/../views/templates/footer.php');
-            die;
-        }
+        $result = $sth->rowCount();
+        return ($result > 0) ? true : false;
     }
 
 
@@ -258,7 +249,7 @@ class Patient extends Database
      *
      * @return bool
      */
-    public function updatePatient()
+    public function updatePatient(): bool
     {
         $request = 'UPDATE `patients` 
                     SET `firstname`=:firstname, `lastname`=:lastname, `birthdate`=:birthdate, `phone`= :phone, `mail`= :mail
@@ -272,33 +263,20 @@ class Patient extends Database
         $sth->bindValue(':phone', $this->getPhone(), PDO::PARAM_STR);
         $sth->bindValue(':mail', $this->getMail(), PDO::PARAM_STR);
         $sth->execute();
-        if ($sth->rowCount() > 0) {
-            // renvoyer sur list avec flash si update ou non
-            header('location: /ListPatients?register=update');
-            die;
-        } else {
-            header('location: /ListPatients?register=noUpdate');
-            die;
-        }
+        $result = $sth->rowCount();
+        return ($result > 0) ? true : false;
     }
 
 
 
-    public static function deletePatient($id)
+    public static function deletePatient($id): bool
     {
         $request = 'DELETE FROM `patients` WHERE id = :id;';
         $sth = Database::connect()->prepare($request);
         $sth->bindValue(':id', $id, PDO::PARAM_INT);
         $sth->execute();
-        if ($sth->rowCount() > 0) {
-            // renvoyer sur list si execute 
-            header('location: /ListPatients?register=deleted');
-            die;
-        } else {
-            header('location: /ListPatients?register=noDeleted');
-            die;
-        }
+        $result = $sth->rowCount();
+        return ($result > 0) ? true : false;
     }
-
     // FIN création class patient
 }

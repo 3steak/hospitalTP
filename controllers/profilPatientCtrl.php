@@ -118,10 +118,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $patient->setBirthdate($birthdate);
             $patient->setPhone($phone);
             $patient->setMail($mail);
-            $isUpdated = $patient->updatePatient();
-
-            if (!$isUpdated) {
-                throw new Exception('Patient non mis a jour', 1);
+            $result = $patient->updatePatient();
+            if ($result) {
+                // renvoyer sur list avec flash si update ou non
+                header('location: /ListPatients?register=update');
+                die;
+            } else {
+                header('location: /ListPatients?register=noUpdate');
+                die;
             }
         } catch (\Throwable $th) {
             $errorMsg = $th->getMessage();

@@ -1,5 +1,4 @@
 
-console.log('coucou');
 $(document).ready(function () {
     $('#dataTable').DataTable({
         language: {
@@ -26,6 +25,28 @@ $(document).ready(function () {
         }
     }
     );
+});
+//  JQUERY LIVE SEARCH
+
+$(document).ready(function () {
+    $("#live_search").keyup(function () {
+        let input = $(this).val();
+        if (input != "") {
+            $.ajax({
+                url: "/../config/livesearch.php",
+                method: "POST",
+                data: { input: input },
+
+                success: function (data) {
+                    $('#searchresult').html(data);
+                    $('#searchresult').css("display", "block");
+                }
+            });
+        } else {
+            // Si input vide caché la div
+            $('#searchresult').css("display", "none");
+        }
+    })
 });
 
 

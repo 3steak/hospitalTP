@@ -15,9 +15,14 @@ try {
     if (Appointment::isIdRdvExist($id) === false) {
         throw new Exception("Ce rendez-vous n'existe pas", 1);
     }
-    $isDeleted = Appointment::deleteAppointment($id);
-    if (!$isDeleted) {
-        throw new Exception('Rendez-vous non mis a jour', 1);
+    $result = Appointment::deleteAppointment($id);
+    if ($result) {
+        // renvoyer sur list si execute 
+        header('location: /ListAppointments?register=deleted');
+        die;
+    } else {
+        header('location: /ListAppointments?register=noDeleted');
+        die;
     }
 } catch (\Throwable $th) {
     $errorMsg = $th->getMessage();

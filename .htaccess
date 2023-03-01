@@ -8,6 +8,6 @@ RewriteRule AddAppointment /controllers/addAppointmentCtrl.php
 RewriteRule ListAppointments /controllers/listAppointmentCtrl.php
 RewriteRule DeleteAppointment /controllers/deleteAppointmentCtrl.php
 RewriteRule DeletePatient /controllers/deletePatientCtrl.php
-RewriteRule AddPatientApt /controllers/AddPatientAptCtrl.php
+RewriteRule AddPatientApt /controllers/addPatientAptCtrl.php
 
 ErrorDocument 404 /404page.php

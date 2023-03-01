@@ -74,11 +74,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $appointment->setId($id);
             $appointment->setDateHour($dateHour);
             $appointment->setIdPatient($idPatient);
-            $isUpdated = $appointment->updateAppointment();
-
-
-            if (!$isUpdated) {
-                throw new Exception('Rendez-vous non mis a jour', 1);
+            $result = $appointment->updateAppointment();
+            if ($result) {
+                // renvoyer sur list si execute 
+                header('location: /ListAppointments?register=update');
+                die;
+            } else {
+                header('location: /ListAppointments?register=noUpdate');
+                die;
             }
         } catch (\Throwable $th) {
             $errorMsg = $th->getMessage();

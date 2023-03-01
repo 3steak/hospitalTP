@@ -15,9 +15,14 @@ try {
     if (Patient::isIdExist($id) === false) {
         throw new Exception("Ce patient n'existe pas", 1);
     }
-    $isDeleted = Patient::deletePatient($id);
-    if (!$isDeleted) {
-        throw new Exception('Rendez-vous non mis a jour', 1);
+    $result = Patient::deletePatient($id);
+    if ($result) {
+        // renvoyer sur list si execute 
+        header('location: /ListPatients?register=deleted');
+        die;
+    } else {
+        header('location: /ListPatients?register=noDeleted');
+        die;
     }
 } catch (\Throwable $th) {
     $errorMsg = $th->getMessage();

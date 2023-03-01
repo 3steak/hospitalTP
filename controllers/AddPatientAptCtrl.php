@@ -1,10 +1,10 @@
 <?php
 session_start();
 require_once(__DIR__ . '/../config/constant.php');
-require_once(__DIR__ . '/../helpers/db.php');
 require_once(__DIR__ . '/../models/Patient.php');
 require_once(__DIR__ . '/../models/Appointment.php');
 require_once(__DIR__ . '/../helpers/flash.php');
+require_once(__DIR__ . '/../helpers/db.php');
 flash('addPatientApt', 'Patient et rendez-vous ajoutés avec succès ! ', FLASH_SUCCESS);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -121,36 +121,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Met nom et prénom en lower + Maj au début
         $lastname = ucfirst(strtolower($lastname));
         $firstname = ucfirst(strtolower($firstname));
-
         try {
-
-
+            $dbh = Database::connect();
             $dbh->beginTransaction();
-            $dbh = new Patient();
-            $dbh->setLastname($lastname);
-            $dbh->setFirstname($firstname);
-            $dbh->setBirthdate($birthdate);
-            $dbh->setPhone($phone);
-            $dbh->setMail($mail);
-            $dbh->addPatient();
+            $patient = new Patient();
+            $patient->setLastname($lastname);
+            $patient->setFirstname($firstname);
+            $patient->setBirthdate($birthdate);
+            $patient->setPhone($phone);
+            $patient->setMail($mail);
+            $result = $patient->addPatient();
+            $appointment = new Appointment();
+            $appointment->setDateHour($dateHour);
+            $appointment->setIdPatient($patient->getId());
+            $resultApt = $appointment->addAppointment();
+            if ($result && $resultApt) {
+                // renvoyer sur list si ligne affectée 
+                header('location: /ListPatients?register=ok');
+                die;
+            } else {
+                throw new Exception('Patient non ajouté', 1);
+            }
             $dbh->commit();
-        } catch (Exception $e) {
+        } catch (\Throwable $th) {
             $dbh->rollBack();
-            echo "Failed: " . $e->getMessage();
+            $errorMsg = $th->getMessage();
+            include_once(__DIR__ . '/../views/templates/header.php');
+            include(__DIR__ . '/../views/errors.php');
+            include_once(__DIR__ . '/../views/templates/footer.php');
+            die;
         }
-        // DEFINIR LES ATTRIBUTS 
-
-
-
     } else {
         include_once(__DIR__ . '/../views/templates/header.php');
-        include(__DIR__ . '/../views/patients/addPatient.php');
+        include(__DIR__ . '/../views/patients/addPatientApt.php');
     }
 
     // si EMPTY $POST
 } else {
     include_once(__DIR__ . '/../views/templates/header.php');
-    include(__DIR__ . '/../views/patients/addPatient.php');
+    include(__DIR__ . '/../views/patients/addPatientApt.php');
 }
 
 include_once(__DIR__ . '/../views/templates/footer.php');

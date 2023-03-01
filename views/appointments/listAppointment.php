@@ -47,3 +47,12 @@
             </div>
         </div>
     </div>
+    <div class="container">
+        <div class="text-center mt-5 mb-4">
+            <h3>Live Search</h3>
+        </div>
+        <input type="text" class="form-control" id="live_search" autocomplete="off" placeholder="Recherche...">
+    </div>
+    <div id="searchresult">
+
+    </div>

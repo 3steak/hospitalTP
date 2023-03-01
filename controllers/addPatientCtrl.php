@@ -92,7 +92,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $patient->setBirthdate($birthdate);
             $patient->setPhone($phone);
             $patient->setMail($mail);
-            $patient->addPatient();
+            $result = $patient->addPatient();
+            if ($result) {
+                // renvoyer sur list si ligne affectée 
+                header('location: /ListPatients?register=ok');
+                die;
+            } else {
+                throw new Exception('Patient non ajouté', 1);
+            }
         } catch (\Throwable $th) {
             $errorMsg = $th->getMessage();
             include_once(__DIR__ . '/../views/templates/header.php');

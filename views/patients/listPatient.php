@@ -2,6 +2,7 @@
     <div class="row">
         <div class="col-12 text-center">
             <h2 class="text-white p-4 mb-5">LISTE DES PATIENTS</h2>
+
             <table id="dataTable" class="display neumorphic">
                 <thead>
                     <tr class="">
@@ -14,7 +15,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($listPatients as $patient) { ?>
+                    <?php var_dump($listPatients);
+                    foreach ($listPatients as $patient) { ?>
                         <tr>
                             <td><?= htmlspecialchars($patient->lastname) ?></td>
                             <td><?= htmlspecialchars($patient->firstname) ?></td>
@@ -22,7 +24,7 @@
                             <td class="dNoneMobil"><a class="telmail" title="Envoyer un mail" href="tel:<?= htmlspecialchars($patient->phone)  ?>"><?= htmlspecialchars($patient->phone)  ?></a> </td>
                             <td class="dNoneMobil"><a class="telmail" title="Appeler" href="mailto:<?= htmlspecialchars($patient->mail) ?>"><?= htmlspecialchars($patient->mail) ?></a></td>
                             <td><a class="m-1 seeProfil" title="Accéder au profil du patient" href="/ProfilPatient?id=<?= $patient->id ?>"><i class="fa-regular fa-eye"></i></a>
-                                <a class="m-1 deleteApt" title="Supprimer le patient" data-bs-toggle="modal" data-bs-target="#validateModal">
+                                <a class="m-1 deleteApt" title="Supprimer le patient" data-bs-toggle="modal" data-bs-whatever="<?= $patient->id ?>" data-bs-target="#validateModal">
                                     <i class="fa-regular fa-trash-can m-1"></i>
                             </td>
                         </tr> <?php } ?>

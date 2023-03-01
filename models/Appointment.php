@@ -81,9 +81,9 @@ class Appointment extends Patient
     /**Permet d'ajouter un rdv
      * addAppointment
      *
-     * @return void
+     * @return bool
      */
-    public function addAppointment()
+    public function addAppointment(): bool
     {
         $request = "INSERT INTO `appointments` (`dateHour`, `idPatients`) VALUES
     (:dateHour, :idPatients);";
@@ -92,16 +92,8 @@ class Appointment extends Patient
         $sth->bindValue(':dateHour', $this->getDatehour(), PDO::PARAM_STR);
         $sth->bindValue(':idPatients', $this->getIdPatient(), PDO::PARAM_INT);
         $sth->execute();
-        if ($sth->rowCount() > 0) {
-            // renvoyer sur list si ligne affectée 
-            header('location: /ListAppointments?register=rdvOk');
-            die;
-        } else {
-            include_once(__DIR__ . '/../views/templates/header.php');
-            include(__DIR__ . '/../views/errors.php');
-            include_once(__DIR__ . '/../views/templates/footer.php');
-            die;
-        }
+        $result = $sth->rowCount();
+        return ($result > 0) ? true : false;
     }
 
 
@@ -150,23 +142,17 @@ class Appointment extends Patient
         $sth = Database::connect()->prepare($request);
         $sth->bindValue(':id', $id, PDO::PARAM_INT);
         $sth->execute();
-        if ($sth->rowCount() > 0) {
-            // renvoyer sur list si execute 
-            header('location: /ListAppointments?register=deleted');
-            die;
-        } else {
-            header('location: /ListAppointments?register=noDeleted');
-            die;
-        }
+        $result = $sth->rowCount();
+        return ($result > 0) ? true : false;
     }
 
 
     /** Permet de mettre à jour le rdv
      * updateAppointment
      *
-     * @return void
+     * @return bool
      */
-    public function updateAppointment()
+    public function updateAppointment(): bool
     {
         $request = 'UPDATE `appointments` 
                     SET `dateHour`=:dateHour, `idPatients`=:idPatients
@@ -176,14 +162,8 @@ class Appointment extends Patient
         $sth->bindValue(':idPatients', $this->idPatient, PDO::PARAM_INT);
         $sth->bindValue(':dateHour', $this->dateHour, PDO::PARAM_STR);
         $sth->execute();
-        if ($sth->rowCount() > 0) {
-            // renvoyer sur list si execute 
-            header('location: /ListAppointments?register=update');
-            die;
-        } else {
-            header('location: /ListAppointments?register=noUpdate');
-            die;
-        }
+        $result = $sth->rowCount();
+        return ($result > 0) ? true : false;
     }
 
 
@@ -194,7 +174,7 @@ class Appointment extends Patient
      * @param  mixed $id
      * @return bool
      */
-    public static function isIdRdvExist(int $id): bool
+    public static function isIdRdvExist(int $id): bool|object
     {
         $request = 'SELECT * FROM `appointments` WHERE `id` = ? ;';
         $sth = Database::connect()->prepare($request);
