@@ -131,8 +131,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $patient->setPhone($phone);
             $patient->setMail($mail);
             $result = $patient->addPatient();
+
             $appointment = new Appointment();
             $appointment->setDateHour($dateHour);
+
+            //  can not set id before initialisation LOGIQUE ! 
             $appointment->setIdPatient($patient->getId());
             $resultApt = $appointment->addAppointment();
             if ($result && $resultApt) {
