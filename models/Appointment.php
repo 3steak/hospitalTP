@@ -118,7 +118,7 @@ class Appointment extends Patient
      * @param  mixed $id
      * @return object
      */
-    public static function getAppointment($id): object
+    public static function getAppointment($id): object|bool
     {
         $request = 'SELECT appointments.id, `idPatients`, `lastname`, `firstname`, `mail`,`dateHour`
                     FROM `appointments` JOIN `patients` 

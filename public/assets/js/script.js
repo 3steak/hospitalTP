@@ -26,15 +26,43 @@ $(document).ready(function () {
     }
     );
 });
+
+
+
+
 //  JQUERY LIVE SEARCH
 
 $(document).ready(function () {
     $("#live_search").keyup(function () {
+        setTimeout(() => {
+            // For data-set 
+            let trashes = document.querySelectorAll('.deleteApt');
+            console.log(trashes);
+            for (let trash of trashes) {
+                trash.addEventListener('click', persoModal)
+            }
+            function persoModal() {
+                // Attributs data
+                let id = this.dataset.id;
+                let name = this.dataset.name;
+                console.log(name);
+
+                // Injection in modal
+                document.querySelector("#livesearchModal .fullname").innerText = name;
+                let link = document.querySelector("#linkDelete");
+                let href = link.getAttribute('href');
+                link.setAttribute('href', href + id)
+            }
+        }, 300);
+
+
+        // inputseatch
         let input = $(this).val();
         if (input != "") {
+
             $.ajax({
                 url: "/../config/livesearch.php",
-                method: "POST",
+                method: "GET",
                 data: { input: input },
 
                 success: function (data) {
@@ -59,7 +87,6 @@ function persoModal() {
     // Attributs data
     let id = this.dataset.id;
     let name = this.dataset.name;
-    console.log(name);
 
     // Injection in modal
     document.querySelector("#validateModal .fullname").innerText = name;
@@ -78,7 +105,6 @@ let button = document.querySelector('.triggerUdpdate');
 let fieldset = document.querySelector('fieldset');
 
 button.addEventListener('click', (event) => {
-    console.log('oui');
     if (fieldset.hasAttribute('disabled')) {
         fieldset.removeAttribute('disabled');
     } else {

@@ -35,6 +35,7 @@
                             <div class="">
                                 <label for="disabledTextInput" class="form-label">Disabled input</label>
                                 <h4 class=" text-start">Heure du rdv</h4>
+                                <p class="text-center text-black"><?= htmlspecialchars(date('H:i', strtotime($appointment->dateHour))) ?></p>
                                 <select class="pe-2" name="hour">
                                     <?php
                                     $h = 9;
@@ -53,7 +54,6 @@
                                         }
                                     }
                                     ?>
-
 
                                 </select>
                             </div>

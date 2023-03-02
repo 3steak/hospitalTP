@@ -5,6 +5,7 @@ require_once(__DIR__ . '/../models/Patient.php');
 require_once(__DIR__ . '/../models/Appointment.php');
 require_once(__DIR__ . '/../config/constant.php');
 require_once(__DIR__ . '/../helpers/flash.php');
+require_once(__DIR__ . '/../helpers/dd.php');
 flash('update', 'Rendez-vous modifié avec succès ! ', FLASH_SUCCESS);
 flash('noUpdate', 'Rendez-vous non modifié ! ', FLASH_INFO);
 
@@ -48,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!$isOk) {
             $error['date'] = '<small class="text-black">La date du rdv n\'est pas au bon format.</small>';
         }
+
         if (strtotime($date) < strtotime('now')) {
             $error['date'] = '<small class="text-black">La date du rdv antérieure à ajd.</small>';
         }

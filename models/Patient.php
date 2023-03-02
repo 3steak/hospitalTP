@@ -234,7 +234,7 @@ class Patient extends Database
 
 
     //VERIF ID
-    public static function isIdExist(int $id)
+    public static function isIdExist(int $id): bool|object
     {
         $request = 'SELECT * FROM `patients` WHERE `id` = ? ;';
         $sth = Database::connect()->prepare($request);
