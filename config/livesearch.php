@@ -6,7 +6,7 @@ if (isset($_GET['input'])) {
     //  dans methode GET
     $request = "SELECT appointments.id, `dateHour`, `idPatients`, `lastname`, `firstname`, `mail`
     FROM `appointments` JOIN `patients` 
-    ON appointments.idPatients = patients.id WHERE `lastname` LIKE '{$input}%' OR `dateHour` LIKE '{$input}%' OR `firstname` LIKE '{$input}%' OR `mail` LIKE '{$input}%' ;";
+    ON appointments.idPatients = patients.id WHERE `lastname` LIKE '%{$input}%' OR `dateHour` LIKE '%{$input}%' OR `firstname` LIKE '%{$input}%' OR `mail` LIKE '%{$input}%'  ORDER BY `lastname` LIMIT 10;";
 
     $appointments = Database::connect()->prepare($request);
 
@@ -37,6 +37,7 @@ if (isset($_GET['input'])) {
                     </tr> <?php } ?>
             </tbody>
         </table>
+        <!--  IF COUNT APPOINTMENTS > 10 alors pagination -->
         <!-- Modal -->
         <div class="modal fade" id="livesearchModal" tabindex="-1" aria-labelledby="validateModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -60,3 +61,19 @@ if (isset($_GET['input'])) {
         echo "<h6 class='text-danger texte-center mt-3'>NO DATA FOUND</h6>";
     }
 }
+
+
+
+//  PAGINATION 
+
+//  NOMBRE RDV TOTAL = COUNT APPOINTMENTS
+//  NOMBRE RDV PAR PAGE = LIMIT 10 IF  count APPOINTMMENTS >10
+
+
+// NUMERO PAGE page=?
+// SI NUMERO PAGE INCONNU page=1
+// if (!empty($_GET['page'])) {
+//     $currentPage = intval(filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT));
+// } else {
+//     $currentPage = 1;
+// }

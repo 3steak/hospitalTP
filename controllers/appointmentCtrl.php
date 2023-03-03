@@ -12,13 +12,15 @@ flash('noUpdate', 'Rendez-vous non modifié ! ', FLASH_INFO);
 
 
 // FILTRE trim FILTERVAR
-$id = intval(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
 
 try {
-    if (Appointment::isIdRdvExist($id) === false) {
+    $id = intval(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
+
+    $appointment = Appointment::getAppointment($id);
+
+    if ($appointment === false) {
         throw new Exception("Ce rendez-vous n'existe pas", 1);
     }
-    $appointment = Appointment::getAppointment($id);
     $listPatients = Patient::listPatient();
 } catch (\Throwable $th) {
     $errorMsg = $th->getMessage();
