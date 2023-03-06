@@ -12,53 +12,10 @@ if (isset($_GET['input'])) {
 
     $appointments->execute();
     $appointments = $appointments->fetchAll();
-    if (!empty($appointments)) { ?>
-        <table class="table table-bordered table-striped mt-4 neumorphic">
-            <thead>
-                <tr class="">
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Date</th>
-                    <th>Heure</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($appointments as $appointment) { ?>
-                    <tr>
-                        <td><?= htmlspecialchars($appointment->lastname) ?></td>
-                        <td><?= htmlspecialchars($appointment->firstname) ?></td>
-                        <td class=""><?= htmlspecialchars(date('d/m/Y', strtotime($appointment->dateHour))) ?></td>
-                        <td class=""><?= htmlspecialchars(date('H:i', strtotime($appointment->dateHour))) ?></td>
-                        <td><a class="m-1 seeProfil" title="Accéder au rendez-vous" href="/controllers/appointmentCtrl.php?id=<?= $appointment->id ?>"><i class="fa-regular fa-eye"></i></a>
-                            <a class="m-1 deleteApt" title="Supprimer le rendez-vous" data-bs-toggle="modal" data-bs-target="#livesearchModal" data-name="<?= htmlspecialchars($appointment->lastname) ?> <?= htmlspecialchars($appointment->firstname) ?>" data-id="<?= $appointment->id ?>">
-                                <i class="fa-regular fa-trash-can m-1"></i>
-                        </td>
-                    </tr> <?php } ?>
-            </tbody>
-        </table>
-        <!--  IF COUNT APPOINTMENTS > 10 alors pagination -->
-        <!-- Modal -->
-        <div class="modal fade" id="livesearchModal" tabindex="-1" aria-labelledby="validateModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="validateModalLabel">Suppression du rendez-vous</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Supprimer le rendez-vous de <span class="fullname"></span> ?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <a class="btn btn-primary" id="linkDelete" href="/DeleteAppointment?id=" role="button">Supprimer</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-<?php
+    if (count($appointments) > 0) {
+        echo json_encode($appointments);
     } else {
-        echo "<h6 class='text-danger texte-center mt-3'>NO DATA FOUND</h6>";
+        false;
     }
 }
 
@@ -66,7 +23,6 @@ if (isset($_GET['input'])) {
 
 //  PAGINATION 
 
-//  NOMBRE RDV TOTAL = COUNT APPOINTMENTS
 //  NOMBRE RDV PAR PAGE = LIMIT 10 IF  count APPOINTMMENTS >10
 
 
@@ -77,3 +33,12 @@ if (isset($_GET['input'])) {
 // } else {
 //     $currentPage = 1;
 // }
+
+
+//  NOMBRE RDV TOTAL = COUNT APPOINTMENTS
+// $sql = 'SELECT COUNT(*) AS nbRdv FROM `appointments`';
+// $sth = Database::connect()->prepare($sql);
+// $sth->execute();
+// $result = $sth->fetch();
+// $nbRDV = (int) $result['nbRDV];
+// var_dump($nbRDV);

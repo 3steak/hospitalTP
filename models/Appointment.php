@@ -72,7 +72,6 @@ class Appointment extends Patient
     public function setDateHour(string $dateHour)
     {
         $this->dateHour = $dateHour;
-
         return $this;
     }
 
