@@ -145,18 +145,22 @@ class Patient extends Database
 
 
 
-    /**
+    /** Permet d'ajouter un patient, , $dbh est attendu uniquement lors d'une transaction
      * addPatient
      *
-     * @return void
+     * @return bool
      */
-    public function addPatient()
+    public function addPatient($dbh = null): bool
     {
 
         $request = 'INSERT INTO `patients` (`firstname`, `lastname`, `birthdate`, `phone`, `mail`) VALUES
         (:lastname,:firstname,:birthdate,:phone,:mail)';
 
-        $sth = Database::connect()->prepare($request);
+        if ($dbh) {
+            $sth = $dbh->prepare($request);
+        } else {
+            $sth = Database::connect()->prepare($request);
+        }
 
         $sth->bindValue(':lastname', $this->getLastname(), PDO::PARAM_STR);
         $sth->bindValue(':firstname', $this->getFirstname(), PDO::PARAM_STR);
@@ -167,6 +171,8 @@ class Patient extends Database
         $result = $sth->rowCount();
         return ($result > 0) ? true : false;
     }
+
+
 
 
     /**

@@ -25,7 +25,7 @@
                         <input class="pe-2" type="date" name="birthdate" value="<?= $birthdate ?? '' ?>" required>
                         </label>
                     </div>
-                    <small><?= $error['date'] ?? '' ?></small>
+                    <small><?= $error['birthdate'] ?? '' ?></small>
 
                     <!-- PHONE -->
                     <div class="field">

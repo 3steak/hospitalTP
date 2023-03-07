@@ -20,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
 
-
     // =============================== DATE ===========================
     // Sanitize number int garde les chiffres les + et les moins
     $date = trim(filter_input(INPUT_POST, 'date', FILTER_SANITIZE_NUMBER_INT));
@@ -52,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (Appointment::isAptExist($dateHour)) {
         $error["apt"] = '<small class= "text-black">Le rendez-vous existe déjà en Base de données pour ce patient</small>';
     }
+
     if (empty($error)) {
 
         try {

@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $isOk = filter_var($date, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEXP_BIRTHDAY . '/')));
         if (!$isOk) {
-            $error['date'] = '<small class="text-black">La date de naissance n\'est pas au bon format.</small>';
+            $error['date'] = '<small class="text-black">La date du rdv n\'est pas au bon format.</small>';
         }
     }
 
@@ -130,22 +130,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $patient->setBirthdate($birthdate);
             $patient->setPhone($phone);
             $patient->setMail($mail);
-            $result = $patient->addPatient();
+            $result = $patient->addPatient($dbh);
 
+            $idPatient = $dbh->lastInsertId();
             $appointment = new Appointment();
             $appointment->setDateHour($dateHour);
-
-            //  can not set id before initialisation LOGIQUE ! 
-            $appointment->setIdPatient($patient->getId());
-            $resultApt = $appointment->addAppointment();
+            $appointment->setIdPatient($idPatient);
+            $resultApt = $appointment->addAppointment($dbh);
             if ($result && $resultApt) {
+                $dbh->commit();
                 // renvoyer sur list si ligne affectée 
                 header('location: /ListPatients?register=ok');
                 die;
             } else {
                 throw new Exception('Patient non ajouté', 1);
             }
-            $dbh->commit();
         } catch (\Throwable $th) {
             $dbh->rollBack();
             $errorMsg = $th->getMessage();

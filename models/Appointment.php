@@ -78,23 +78,28 @@ class Appointment extends Patient
 
 
 
-    /**Permet d'ajouter un rdv
+    /**Permet d'ajouter un rdv, $dbh est attendu uniquement lors d'une transaction
      * addAppointment
      *
      * @return bool
      */
-    public function addAppointment(): bool
+    public function addAppointment($dbh = null): bool
     {
         $request = "INSERT INTO `appointments` (`dateHour`, `idPatients`) VALUES
     (:dateHour, :idPatients);";
-
-        $sth = Database::connect()->prepare($request);
+        if ($dbh) {
+            $sth = $dbh->prepare($request);
+        } else {
+            $sth = Database::connect()->prepare($request);
+        }
         $sth->bindValue(':dateHour', $this->getDatehour(), PDO::PARAM_STR);
         $sth->bindValue(':idPatients', $this->getIdPatient(), PDO::PARAM_INT);
         $sth->execute();
         $result = $sth->rowCount();
         return ($result > 0) ? true : false;
     }
+
+
 
 
     /**Permet de lister les rdv
