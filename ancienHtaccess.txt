@@ -8,3 +8,13 @@ RewriteRule DeleteAppointment /controllers/deleteAppointmentCtrl.php
 RewriteRule DeletePatient /controllers/deletePatientCtrl.php
 
 ErrorDocument 404 /404page.php
+
+
+
+
+nouveau 
+
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php [QSA,L]
