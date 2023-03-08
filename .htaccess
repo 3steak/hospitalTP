@@ -1,3 +1,6 @@
+RewriteEngine On
+
+
 RewriteRule Accueil /controllers/homeCtrl.php
 RewriteRule AddPatient /controllers/addPatientCtrl.php
 RewriteRule ListPatients /controllers/listPatientCtrl.php
