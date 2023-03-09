@@ -1,0 +1,173 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "95f303c25d01f699a5623e73e4485540",
+    "packages": [
+        {
+            "name": "php-flasher/flasher",
+            "version": "v1.13.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-flasher/flasher.git",
+                "reference": "4f75f1d3638522db2531e76a27e96075432011c8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-flasher/flasher/zipball/4f75f1d3638522db2531e76a27e96075432011c8",
+                "reference": "4f75f1d3638522db2531e76a27e96075432011c8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "helpers.php"
+                ],
+                "psr-4": {
+                    "Flasher\\Prime\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Younes KHOUBZA",
+                    "email": "younes.khoubza@gmail.com",
+                    "homepage": "https://www.linkedin.com/in/younes-khoubza",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHPFlasher - A powerful & easy-to-use package for adding flash messages to Laravel or Symfony projects. Provides feedback to users, improves engagement & enhances user experience. Intuitive design for beginners & experienced developers. A reliable, flexible solution.",
+            "homepage": "https://php-flasher.io",
+            "keywords": [
+                "custom-adapter",
+                "dark-mode",
+                "desktop-notifications",
+                "flash-messages",
+                "framework-agnostic",
+                "javascript",
+                "laravel",
+                "notification-system",
+                "noty",
+                "notyf",
+                "php",
+                "php-flasher",
+                "phpstorm-auto-complete",
+                "pnotify",
+                "rtl",
+                "sweetalert",
+                "symfony",
+                "toastr",
+                "user-experience",
+                "user-feedback",
+                "yoeunes"
+            ],
+            "support": {
+                "source": "https://github.com/php-flasher/flasher/tree/v1.13.1"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/paypalme/yoeunes",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/yoeunes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://ko-fi.com/yoeunes",
+                    "type": "ko_fi"
+                },
+                {
+                    "url": "https://opencollective.com/php-flasher",
+                    "type": "open_collective"
+                },
+                {
+                    "url": "https://www.patreon.com/yoeunes",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2023-01-15T22:24:30+00:00"
+        },
+        {
+            "name": "tamtamchik/simple-flash",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tamtamchik/simple-flash.git",
+                "reference": "37e31285119516a7f9f60f89cb38c13233fd85c4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tamtamchik/simple-flash/zipball/37e31285119516a7f9f60f89cb38c13233fd85c4",
+                "reference": "37e31285119516a7f9f60f89cb38c13233fd85c4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9",
+                "scrutinizer/ocular": "^1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev",
+                    "2.0.x": "2.0.x-dev",
+                    "1.2.x": "1.2.x-dev",
+                    "1.1.x": "1.1.x-dev",
+                    "1.0.x": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/function.php"
+                ],
+                "psr-4": {
+                    "Tamtamchik\\SimpleFlash\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yuri Tkachenko",
+                    "email": "yuri.tam.tkachenko@gmail.com",
+                    "homepage": "https://tamtamchika.net"
+                }
+            ],
+            "description": "Easy, framework agnostic flash notifications for PHP.",
+            "homepage": "https://github.com/tamtamchik/simple-flash",
+            "keywords": [
+                "agnostic",
+                "flash",
+                "messages",
+                "notifications"
+            ],
+            "support": {
+                "issues": "https://github.com/tamtamchik/simple-flash/issues",
+                "source": "https://github.com/tamtamchik/simple-flash/tree/3.0.0"
+            },
+            "time": "2023-01-26T15:45:54+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
+}

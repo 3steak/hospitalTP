@@ -6,8 +6,8 @@ require_once(__DIR__ . '/../models/Appointment.php');
 require_once(__DIR__ . '/../config/constant.php');
 require_once(__DIR__ . '/../helpers/flash.php');
 require_once(__DIR__ . '/../helpers/dd.php');
-flash('update', 'Rendez-vous modifié avec succès ! ', FLASH_SUCCESS);
-flash('noUpdate', 'Rendez-vous non modifié ! ', FLASH_INFO);
+// flash('update', 'Rendez-vous modifié avec succès ! ', FLASH_SUCCESS);
+// flash('noUpdate', 'Rendez-vous non modifié ! ', FLASH_INFO);
 
 
 

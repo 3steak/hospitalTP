@@ -2,8 +2,8 @@
 session_start();
 require_once(__DIR__ . '/../models/Patient.php');
 require_once(__DIR__ . '/../helpers/flash.php');
-flash('deleted', 'Patient supprimé avec succès ! ', FLASH_SUCCESS);
-flash('noDeleted', 'Patient non supprimé ! ', FLASH_INFO);
+// flash('deleted', 'Patient supprimé avec succès ! ', FLASH_SUCCESS);
+// flash('noDeleted', 'Patient non supprimé ! ', FLASH_INFO);
 
 
 

@@ -2,8 +2,8 @@
 session_start();
 require_once(__DIR__ . '/../models/Appointment.php');
 require_once(__DIR__ . '/../helpers/flash.php');
-flash('deleted', 'Rendez-vous supprimé avec succès ! ', FLASH_SUCCESS);
-flash('noDeleted', 'Rendez-vous non supprimé ! ', FLASH_INFO);
+// flash('deleted', 'Rendez-vous supprimé avec succès ! ', FLASH_SUCCESS);
+// flash('noDeleted', 'Rendez-vous non supprimé ! ', FLASH_INFO);
 
 
 

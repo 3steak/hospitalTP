@@ -4,7 +4,7 @@ require_once(__DIR__ . '/../config/constant.php');
 require_once(__DIR__ . '/../helpers/db.php');
 require_once(__DIR__ . '/../models/Patient.php');
 require_once(__DIR__ . '/../helpers/flash.php');
-flash('addPatient', 'Patient ajouté avec succès ! ', FLASH_SUCCESS);
+// flash('addPatient', 'Patient ajouté avec succès ! ', FLASH_SUCCESS);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // ============= FIRSTNAME : clean and check ===========

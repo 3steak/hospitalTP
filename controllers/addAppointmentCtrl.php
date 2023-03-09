@@ -1,10 +1,15 @@
 <?php
-session_start();
+
 require_once(__DIR__ . '/../config/constant.php');
 require_once(__DIR__ . '/../helpers/db.php');
 require_once(__DIR__ . '/../models/Appointment.php');
-require_once(__DIR__ . '/../helpers/flash.php');
-flash('addRDV', 'Rendez-vous enregistré avec succès ! ', FLASH_SUCCESS);
+require(__DIR__ . '/../vendor/autoload.php');
+
+session_start();
+
+use function Tamtamchik\SimpleFlash\flash;
+
+
 
 $listPatients = Patient::listPatient();
 
@@ -48,9 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $dateHour  = $date . ' ' . $hour;
-    if (Appointment::isAptExist($dateHour)) {
-        $error["apt"] = '<small class= "text-black">Le rendez-vous existe déjà en Base de données pour ce patient</small>';
-    }
+    // if (Appointment::isAptExist($dateHour)) {
+    //     $error["apt"] = '<small class= "text-black">Le rendez-vous existe déjà en Base de données pour ce patient</small>';
+    // }
 
     if (empty($error)) {
 
@@ -61,7 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $result = $appointment->addAppointment();
             if ($result) {
                 // renvoyer sur list si ligne affectée 
-                header('location: /ListAppointments?register=rdvOk');
+
+                flash()->info('ok');
+                header('location: /ListAppointments');
                 die;
             } else {
                 throw new Exception('Rendez-vous non ajouté', 1);

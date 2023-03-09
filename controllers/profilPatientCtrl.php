@@ -4,8 +4,8 @@ require_once(__DIR__ . '/../helpers/db.php');
 require_once(__DIR__ . '/../models/Patient.php');
 require_once(__DIR__ . '/../config/constant.php');
 require_once(__DIR__ . '/../helpers/flash.php');
-flash('update', 'Patient modifié avec succès ! ', FLASH_SUCCESS);
-flash('noUpdate', 'Patient non modifié ! ', FLASH_WARNING);
+// flash('update', 'Patient modifié avec succès ! ', FLASH_SUCCESS);
+// flash('noUpdate', 'Patient non modifié ! ', FLASH_WARNING);
 
 
 
