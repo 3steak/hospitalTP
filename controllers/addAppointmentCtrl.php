@@ -1,11 +1,10 @@
 <?php
-
+session_start();
 require_once(__DIR__ . '/../config/constant.php');
 require_once(__DIR__ . '/../helpers/db.php');
 require_once(__DIR__ . '/../models/Appointment.php');
 require_once(__DIR__ . '/../vendor/autoload.php');
 
-use \laracasts\flash;
 
 
 
@@ -66,7 +65,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($result) {
                 // renvoyer sur list si ligne affectée 
 
-                flash('Message flash')->success();
+
+                flash('Welcome Aboard!');
+
                 header('location: /ListAppointments');
                 die;
             } else {

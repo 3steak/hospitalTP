@@ -1,8 +1,7 @@
 <?php
-session_start();
 require_once(__DIR__ . '/../models/Appointment.php');
+require_once(__DIR__ . '/../vendor/autoload.php');
 
-use \Laracasts\Flash;
 
 
 @include('flash::message');
