@@ -1,6 +1,5 @@
 {
     "require": {
-        "php-flasher/flasher": "^1.13",
-        "tamtamchik/simple-flash": "^3.0"
+        "laracasts/flash": "^3.2"
     }
 }

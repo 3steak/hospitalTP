@@ -3,11 +3,10 @@
 require_once(__DIR__ . '/../config/constant.php');
 require_once(__DIR__ . '/../helpers/db.php');
 require_once(__DIR__ . '/../models/Appointment.php');
-require(__DIR__ . '/../vendor/autoload.php');
+require_once(__DIR__ . '/../vendor/autoload.php');
 
-session_start();
+use \laracasts\flash;
 
-use function Tamtamchik\SimpleFlash\flash;
 
 
 
@@ -67,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($result) {
                 // renvoyer sur list si ligne affectée 
 
-                flash()->info('ok');
+                flash('Message flash')->success();
                 header('location: /ListAppointments');
                 die;
             } else {
